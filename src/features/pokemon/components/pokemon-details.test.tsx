@@ -1,6 +1,8 @@
-import { screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { screen, within } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { describe, expect, it, vi } from 'vitest'
 
+import { http } from '@/integrations/axios'
 import { renderRoute } from '@/lib/test-utils'
 
 describe('pokemon details', () => {
@@ -24,5 +26,34 @@ describe('pokemon details', () => {
       'href',
       '/pokemon',
     )
+  })
+
+  it('names the browser tab after the Pokémon', async () => {
+    await renderRoute('/pokemon/bulbasaur')
+
+    await screen.findByRole('heading', { level: 1, name: 'Bulbasaur' })
+    expect(document.title).toBe('Bulbasaur - Starter')
+  })
+
+  it('treats a name with characters PokeAPI cannot have as not found, without calling it', async () => {
+    const get = vi.spyOn(http, 'get')
+    await renderRoute('/pokemon/..%2Fberry')
+
+    expect(await screen.findByRole('heading', { name: 'Pokémon Not Found' })).toBeInTheDocument()
+    expect(get).not.toHaveBeenCalled()
+  })
+
+  it('keeps the header on a failed load and recovers on retry', async () => {
+    vi.spyOn(http, 'get').mockRejectedValueOnce(new Error('Network Error'))
+    const user = userEvent.setup()
+    await renderRoute('/pokemon/bulbasaur')
+
+    const alert = await screen.findByRole('alert')
+    expect(within(alert).getByRole('heading', { name: 'Something Went Wrong' })).toBeInTheDocument()
+    expect(screen.getByRole('navigation', { name: 'Main' })).toBeInTheDocument()
+
+    await user.click(within(alert).getByRole('button', { name: 'Try Again' }))
+
+    expect(await screen.findByRole('heading', { level: 1, name: 'Bulbasaur' })).toBeInTheDocument()
   })
 })

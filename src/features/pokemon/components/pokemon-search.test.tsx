@@ -42,12 +42,13 @@ describe('pokemon search', () => {
     expect(router.state.location.pathname).toBe('/pokemon/pikachu')
   })
 
-  it('finds a Pokemon by its Pokedex number', async () => {
-    const { user, query, submit } = await setup()
+  it('finds a Pokemon by its Pokedex number and moves to its name', async () => {
+    const { user, router, query, submit } = await setup()
 
     await user.type(query, '25')
     await user.click(submit)
 
     expect(await screen.findByRole('heading', { level: 1, name: 'Pikachu' })).toBeInTheDocument()
+    expect(router.state.location.pathname).toBe('/pokemon/pikachu')
   })
 })

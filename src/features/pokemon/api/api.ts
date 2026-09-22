@@ -27,7 +27,9 @@ export async function fetchPokemonList(): Promise<PokemonSummary[]> {
 }
 
 export async function fetchPokemon(nameOrId: string): Promise<Pokemon> {
-  const { data } = await http.get<PokemonResponse>(`/pokemon/${nameOrId.toLowerCase()}`)
+  const { data } = await http.get<PokemonResponse>(
+    `/pokemon/${encodeURIComponent(nameOrId.toLowerCase())}`,
+  )
   return {
     id: data.id,
     name: data.name,

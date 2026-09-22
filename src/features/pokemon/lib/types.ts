@@ -12,6 +12,9 @@ export type Pokemon = PokemonSummary & {
   imageUrl: string | null
 }
 
+// Names and Pokedex numbers as PokeAPI accepts them in a URL.
+export const POKEMON_SLUG = /^[a-z0-9-]+$/i
+
 export const pokemonSearchSchema = z.object({
   query: z
     .string()

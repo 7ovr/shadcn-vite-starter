@@ -13,6 +13,7 @@ export const Route = createFileRoute('/(app)/_app/pokemon/')({
   loader: ({ context: { queryClient } }) => {
     void queryClient.prefetchQuery(pokemonListOptions())
   },
+  head: () => ({ meta: [{ title: 'Pokémon - Starter' }] }),
   component: PokemonPage,
 })
 

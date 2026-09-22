@@ -1,23 +1,20 @@
 import type { QueryClient } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import {
-  Link,
-  Outlet,
-  createRootRouteWithContext,
-  type ErrorComponentProps,
-} from '@tanstack/react-router'
+import { HeadContent, Link, Outlet, createRootRouteWithContext } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
-import { SearchXIcon, TriangleAlertIcon } from 'lucide-react'
+import { SearchXIcon } from 'lucide-react'
 
 import { PageState } from '@/components/page-state'
+import { RouteError } from '@/components/route-error'
 import { SiteHeader } from '@/components/site-header'
-import { Button, buttonVariants } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
 
 export type RouterContext = {
   queryClient: QueryClient
 }
 
 export const Route = createRootRouteWithContext<RouterContext>()({
+  head: () => ({ meta: [{ title: 'Starter' }] }),
   component: RootLayout,
   notFoundComponent: NotFound,
   errorComponent: RootError,
@@ -27,6 +24,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 function RootLayout() {
   return (
     <>
+      <HeadContent />
       <SiteHeader />
       <Outlet />
       <TanStackRouterDevtools position="bottom-right" />
@@ -52,19 +50,10 @@ function NotFound() {
   )
 }
 
-function RootError({ reset }: ErrorComponentProps) {
+function RootError() {
   return (
-    <main role="alert" className="mx-auto w-full max-w-md px-4">
-      <PageState
-        icon={TriangleAlertIcon}
-        title="Something Went Wrong"
-        description="This page could not load. Check your connection and try again."
-        action={
-          <Button variant="outline" onClick={reset}>
-            Try Again
-          </Button>
-        }
-      />
+    <main className="mx-auto w-full max-w-md px-4">
+      <RouteError />
     </main>
   )
 }
