@@ -12,5 +12,6 @@ pre-commit:
 
     - name: lint
       glob: "*.{js,ts,tsx}"
-      run: pnpm exec eslint --fix {staged_files}
+      # The generated route tree is ignored on purpose; do not warn when it is staged.
+      run: pnpm exec eslint --fix --no-warn-ignored {staged_files}
       stage_fixed: true
