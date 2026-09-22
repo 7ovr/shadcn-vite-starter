@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
 import {
   Card,
   CardAction,
@@ -130,15 +130,15 @@ export default function PricingBlock() {
                 </ul>
               </CardContent>
               <CardFooter>
-                <Button
-                  nativeButton={false}
-                  variant={tier.featured ? 'default' : 'outline'}
-                  size="lg"
-                  className="w-full"
-                  render={<a href="#" />}
+                <a
+                  href="#"
+                  className={cn(
+                    buttonVariants({ variant: tier.featured ? 'default' : 'outline', size: 'lg' }),
+                    'w-full',
+                  )}
                 >
                   {tier.cta}
-                </Button>
+                </a>
               </CardFooter>
             </Card>
           ))}

@@ -21,7 +21,7 @@ describe('pokemon queries', () => {
     const { queryClient } = await renderRoute('/pokemon')
 
     expect(await screen.findByRole('heading', { level: 1, name: 'Pokémon' })).toBeInTheDocument()
-    expect(screen.getByRole('status', { name: 'Loading' })).toBeInTheDocument()
+    expect(screen.getByRole('status')).toHaveTextContent('Loading')
     expect(queryClient.getQueryState(pokemonKeys.lists())?.status).toBe('pending')
   })
 })

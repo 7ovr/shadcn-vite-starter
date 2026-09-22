@@ -22,6 +22,15 @@ describe('router', () => {
     }
   })
 
+  it('links the home page calls to action to real pages', async () => {
+    await renderRoute('/')
+
+    const getStarted = await screen.findAllByRole('link', { name: 'Get Started' })
+    const toExample = getStarted.filter((link) => link.getAttribute('href') === '/pokemon')
+    expect(toExample).toHaveLength(2)
+    expect(screen.queryAllByRole('button', { name: 'Get Started' })).toHaveLength(0)
+  })
+
   it('shows the not found page for an unknown path', async () => {
     await renderRoute('/does-not-exist')
 

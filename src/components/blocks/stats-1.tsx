@@ -27,12 +27,14 @@ export default function StatsBlock() {
               key={label}
               className="flex flex-col items-center border-border px-6 py-8 text-center md:[&:nth-child(2)]:border-r [&:nth-child(odd)]:border-r"
             >
-              <dt className="text-4xl font-bold tracking-tight sm:text-5xl">{value}</dt>
-              <dd className="mt-2 text-sm text-muted-foreground">{label}</dd>
-              <Badge variant="secondary" className="mt-2">
-                <ArrowUp data-icon="inline-start" aria-hidden="true" />
-                {delta}
-              </Badge>
+              <dt className="mt-2 text-sm text-muted-foreground">{label}</dt>
+              <dd className="order-first text-4xl font-bold tracking-tight sm:text-5xl">{value}</dd>
+              <dd className="mt-2">
+                <Badge variant="secondary">
+                  <ArrowUp data-icon="inline-start" aria-hidden="true" />
+                  {delta}
+                </Badge>
+              </dd>
             </div>
           ))}
         </dl>

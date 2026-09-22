@@ -1,6 +1,9 @@
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { Link } from '@tanstack/react-router'
+
+import { buttonVariants } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { REPOSITORY_URL } from '@/lib/config'
 import { Sparkles, ArrowRight, ArrowUpRight } from 'lucide-react'
 
 const LOGOS = ['Northwind', 'Vertex', 'Lumina', 'Cascade', 'Quantel']
@@ -24,14 +27,19 @@ export default function HeroBlock() {
         </p>
 
         <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row">
-          <Button render={<a href="#" />} nativeButton={false}>
+          <Link to="/pokemon" className={buttonVariants()}>
             Get Started
             <ArrowRight data-icon="inline-end" aria-hidden="true" />
-          </Button>
-          <Button variant="outline" render={<a href="#" />} nativeButton={false}>
+          </Link>
+          <a
+            href={`${REPOSITORY_URL}#readme`}
+            target="_blank"
+            rel="noreferrer"
+            className={buttonVariants({ variant: 'outline' })}
+          >
             Learn More
             <ArrowUpRight data-icon="inline-end" aria-hidden="true" />
-          </Button>
+          </a>
         </div>
 
         <Separator className="mt-12 w-full max-w-md" />
@@ -44,7 +52,7 @@ export default function HeroBlock() {
           {LOGOS.map((logo) => (
             <li
               key={logo}
-              className="text-base font-bold tracking-tight text-muted-foreground/70 transition-colors hover:text-foreground"
+              className="text-base font-bold tracking-tight text-muted-foreground transition-colors hover:text-foreground"
             >
               {logo}
             </li>

@@ -67,6 +67,8 @@ export function PokemonTable() {
     features,
     columns,
     data,
+    // The list already arrives in Pokedex order, so the first click on a column sorts ascending.
+    sortDescFirst: false,
     initialState: { pagination: { pageIndex: 0, pageSize: PAGE_SIZE } },
   })
 

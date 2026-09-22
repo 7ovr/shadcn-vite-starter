@@ -1,4 +1,8 @@
-import { Button } from '@/components/ui/button'
+import { Link } from '@tanstack/react-router'
+
+import { buttonVariants } from '@/components/ui/button'
+import { REPOSITORY_URL } from '@/lib/config'
+import { cn } from '@/lib/utils'
 import { ArrowRight } from 'lucide-react'
 
 export default function CtaBlock() {
@@ -14,18 +18,18 @@ export default function CtaBlock() {
         </p>
 
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <Button render={<a href="#" />} nativeButton={false} className="w-full sm:w-auto">
+          <Link to="/pokemon" className={cn(buttonVariants(), 'w-full sm:w-auto')}>
             Get Started
             <ArrowRight data-icon="inline-end" aria-hidden="true" />
-          </Button>
-          <Button
-            variant="secondary"
-            render={<a href="#" />}
-            nativeButton={false}
-            className="w-full sm:w-auto"
+          </Link>
+          <a
+            href={`${REPOSITORY_URL}#readme`}
+            target="_blank"
+            rel="noreferrer"
+            className={cn(buttonVariants({ variant: 'secondary' }), 'w-full sm:w-auto')}
           >
             Read The Docs
-          </Button>
+          </a>
         </div>
 
         <p className="mt-6 text-xs text-muted-foreground">No credit card required.</p>

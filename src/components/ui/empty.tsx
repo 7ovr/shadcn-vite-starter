@@ -71,7 +71,7 @@ function EmptyTitle({
   size,
   level,
   ...props
-}: React.HTMLAttributes<HTMLHeadingElement> &
+}: React.ComponentProps<'h1'> &
   VariantProps<typeof emptyTitleVariants> & {
     level?: 1 | 2 | 3
   }) {

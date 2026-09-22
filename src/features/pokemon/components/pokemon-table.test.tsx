@@ -50,6 +50,15 @@ describe('pokemon table', () => {
     expect(firstColumn(table)[0]).toBe('Bulbasaur')
   })
 
+  it('sorts by number ascending on the first click', async () => {
+    const { user, table } = await setup()
+
+    await user.click(within(table).getByRole('button', { name: 'No.' }))
+
+    expect(firstColumn(table)[0]).toBe('Bulbasaur')
+    expect(within(table).getAllByRole('columnheader')[0]).toHaveAttribute('aria-sort', 'ascending')
+  })
+
   it('sorts by name ascending, then descending', async () => {
     const { user, table } = await setup()
     const sortByName = within(table).getByRole('button', { name: 'Name' })

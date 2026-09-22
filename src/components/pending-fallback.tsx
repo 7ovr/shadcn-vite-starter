@@ -2,7 +2,8 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 export function PendingFallback() {
   return (
-    <div role="status" aria-label="Loading" className="flex flex-col gap-3">
+    <div role="status" className="flex flex-col gap-3">
+      <span className="sr-only">Loading</span>
       <div className="h-8 w-full">
         <Skeleton fill />
       </div>
