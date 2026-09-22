@@ -2,8 +2,6 @@
 
 A React starter with the stack already wired: Vite, TypeScript, TanStack Router, Query, Form and Table, and shadcn/ui on Base UI. It ships a page built from six free [7Ovr](https://7ovr.com) blocks and a working example built on the free [PokéAPI](https://pokeapi.co), so you can start on the product instead of the setup.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/7ovr/shadcn-vite-starter&project-name=shadcn-vite-starter&repository-name=shadcn-vite-starter)
-
 ## Setup
 
 You need Node 24 or newer and [pnpm](https://pnpm.io) 12 or newer.
