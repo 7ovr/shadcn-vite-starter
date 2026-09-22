@@ -78,7 +78,8 @@ src/
 │   ├── components/             Search form, table and detail view
 │   └── lib/                    Types, validation and formatting
 ├── integrations/               Axios, Query client, router, test setup
-├── lib/                        Shared helpers, config and the query key factory
+├── hooks/                      Shared React hooks, like useTheme
+├── lib/                        Shared helpers, config, the query key factory and the theme
 ├── types/                      Type declarations for environment variables
 ├── route-tree.gen.ts           Generated from src/routes, do not edit
 ├── index.tsx                   Starts the app
@@ -108,7 +109,7 @@ The 7Ovr registry is already set up in `components.json`. Install any free block
 pnpm dlx shadcn@latest add @7ovr/hero-2
 ```
 
-The source lands in `src/components/blocks/`. Import it into a page:
+The source lands in `src/components/blocks/`. If the CLI asks to overwrite a file in `src/components/ui/`, answer no: this starter's copies carry their own variants. Then run `pnpm format` and import the block into a page:
 
 ```tsx
 import HeroBlock from '@/components/blocks/hero-2'

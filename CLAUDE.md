@@ -30,7 +30,9 @@ How to write code in this repository: conventions, patterns and constraints. Set
 - Routes live in `src/routes/`, one file each, created with `createFileRoute`. The plugin regenerates `src/route-tree.gen.ts`; commit it, never edit it.
 - Route groups in parentheses, like `(app)/`, share a layout without adding a URL segment. Layout routes take an underscore prefix, like `_app.tsx`, and their children live in the matching `_app/` folder.
 - `(marketing)/_marketing` renders full width for block pages; `(app)/_app` renders the centred app container.
-- Every page renders exactly one `<h1>`.
+- Every page renders exactly one `<h1>` and sets its browser tab title through the route's `head` option, for example `Pikachu - Starter`.
+- Every route catches its own errors: the router's `defaultErrorComponent` is `RouteError`, so a failed loader shows an error inside the layout and the header stays. Its retry calls `router.invalidate()`, which re-runs the loader; `reset()` alone would throw the same error again.
+- Validate route params before they reach a request, and encode them in the URL path. `$name` checks `POKEMON_SLUG` and turns anything else into `notFound()`, and `api.ts` wraps the name in `encodeURIComponent`, because the router decodes `%2F` into a real slash.
 
 ### Data fetching
 
@@ -71,7 +73,9 @@ Each feature is self-contained under `src/features/<name>/`:
 - `components/`: the feature's components.
 - `lib/`: feature types, Zod schemas and small helpers.
 
-Shared code lives in `src/lib/` (utilities, config, the key factory, test helpers). Singletons live in `src/integrations/`: the Axios client, the Query client, the router and the Vitest setup.
+Shared code lives in `src/lib/` (utilities, config, the key factory, the theme context, test helpers) and hooks in `src/hooks/`. Singletons live in `src/integrations/`: the Axios client, the Query client, the router and the Vitest setup.
+
+The theme is split so every file exports one kind of thing: `src/lib/theme.ts` holds the context, types and storage helpers, `src/components/theme-provider.tsx` the provider and `src/hooks/use-theme.ts` the hook. The inline script in `index.html` sets the theme class before the first paint and must read the same `THEME_STORAGE_KEY`. Storage access is wrapped in try/catch, because a browser that blocks storage would otherwise crash the whole app.
 
 ### Design-system lint
 
@@ -95,7 +99,11 @@ Also:
 
 ### 7Ovr blocks
 
-Install with `pnpm dlx shadcn@latest add @7ovr/<name>`; they land in `src/components/blocks/` and are ours to edit in place. Pro blocks come from `@7ovr-pro` and need `REGISTRY_TOKEN` in `.env`. Blocks ship their own styling, so `.oxlintrc.json` turns off five of the six design-system rules for them; `no-unknown-classes` still applies.
+Install with `pnpm dlx shadcn@latest add @7ovr/<name>`; they land in `src/components/blocks/` and are ours to edit in place.
+
+- **Never let an install overwrite `src/components/ui/`.** Blocks list `button`, `badge` and similar as dependencies, so the CLI asks to overwrite them. Answer no, and never pass `--overwrite`: our copies carry variants such as `Button` `nav`, and overwriting drops them.
+- Run `pnpm format` after adding a block. The registry ships double quotes; the pre-commit hook fixes that too, but CI checks formatting.
+- Point placeholder calls to action at real pages, as `<a>` or a router `Link` styled with `buttonVariants()`. Pro blocks come from `@7ovr-pro` and need `REGISTRY_TOKEN` in `.env`. Blocks ship their own styling, so `.oxlintrc.json` turns off five of the six design-system rules for them; `no-unknown-classes` still applies.
 
 ### Tests
 
@@ -111,4 +119,4 @@ Skills for agents working here live in two identical folders: `.claude/skills/` 
 
 ## Before you finish
 
-Run `pnpm lint`, `pnpm format:check`, `pnpm typecheck`, `pnpm test` and `pnpm build`. CI runs the same checks on every push and pull request.
+Run `pnpm lint`, `pnpm format:check`, `pnpm typecheck`, `pnpm test` and `pnpm build`. `pnpm lint` fails on any warning, so the codebase stays at zero findings. CI runs the same checks on every push and pull request.
