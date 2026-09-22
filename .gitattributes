@@ -1,0 +1,2 @@
+# Match Prettier, which writes LF on every platform.
+* text=auto eol=lf
