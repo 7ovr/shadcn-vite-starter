@@ -11,7 +11,7 @@ export function createTestQueryClient() {
   })
 }
 
-// Renders the real route tree at a path, the way the app boots in main.tsx.
+// Renders the real route tree at a path, the way the app boots in index.tsx.
 export async function renderRoute(path: string) {
   const queryClient = createTestQueryClient()
   const router = createAppRouter({

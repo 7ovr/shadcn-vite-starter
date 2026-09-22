@@ -3,4 +3,5 @@ packages: []
 allowBuilds:
   # Hooks install through the prepare script instead.
   lefthook: false
-  msw: set this to true or false
+  # An optional Vitest peer that this project does not install.
+  msw: false
