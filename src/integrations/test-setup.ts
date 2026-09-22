@@ -7,7 +7,8 @@ configure({ asyncUtilTimeout: 10_000 })
 
 function noop() {}
 
-// jsdom has no matchMedia, which the theme provider reads for the system scheme.
+// jsdom has neither scrollTo nor matchMedia, which the router and the theme provider use.
+vi.stubGlobal('scrollTo', noop)
 vi.stubGlobal('matchMedia', (query: string) => ({
   matches: false,
   media: query,
