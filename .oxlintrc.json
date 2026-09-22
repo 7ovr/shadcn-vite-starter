@@ -40,31 +40,28 @@
     "react/react-in-jsx-scope": "off",
     "import/no-unassigned-import": "off",
     "unicorn/prefer-node-protocol": "error",
-    "shadcn/no-restyle": [
-      "error",
-      {
-        "allow": ["layout", "spacing"]
-      }
-    ],
+    "jsx-a11y/prefer-tag-over-role": "off",
+    "shadcn/no-restyle": "error",
     "shadcn/no-raw-colors": "error",
+    "shadcn/no-arbitrary-values": "error",
     "shadcn/no-unknown-classes": "error",
     "shadcn/require-static-classes": "error",
-    "shadcn/no-arbitrary-values": "warn",
-    "jsx-a11y/prefer-tag-over-role": "off"
+    "shadcn/no-inline-styles": "error",
+    "import/no-named-as-default-member": "off"
   },
   "overrides": [
     {
-      "files": ["src/components/ui/**", "src/components/blocks/**"],
+      "files": ["src/components/blocks/**"],
       "rules": {
         "shadcn/no-restyle": "off",
-        "shadcn/no-arbitrary-values": "off",
         "shadcn/no-raw-colors": "off",
+        "shadcn/no-arbitrary-values": "off",
         "shadcn/require-static-classes": "off",
+        "shadcn/no-inline-styles": "off",
         "react/only-export-components": "off",
         "react/no-array-index-key": "off",
         "jsx-a11y/anchor-is-valid": "off",
-        "jsx-a11y/control-has-associated-label": "off",
-        "jsx-a11y/label-has-associated-control": "off"
+        "jsx-a11y/control-has-associated-label": "off"
       }
     },
     {
@@ -80,5 +77,10 @@
       }
     }
   ],
-  "ignorePatterns": ["dist/**", "src/route-tree.gen.ts"]
+  "ignorePatterns": [
+    "dist/**",
+    "src/route-tree.gen.ts",
+    "src/components/ui/**",
+    ".claude/skills/**"
+  ]
 }

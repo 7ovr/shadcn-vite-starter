@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { RouterProvider, createMemoryHistory } from '@tanstack/react-router'
 
 import { ThemeProvider } from '@/components/theme-provider'
-import { createAppRouter } from '@/router'
+import { createAppRouter } from '@/integrations/router'
 
 export function createTestQueryClient() {
   return new QueryClient({

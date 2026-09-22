@@ -17,14 +17,20 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  server: {
+    // With VITE_API_URL=/api, development requests go to your backend on port 8080.
+    proxy: { '/api': { target: 'http://localhost:8080', changeOrigin: true } },
+  },
   resolve: {
     alias: {
       '@': path.resolve(import.meta.dirname, './src'),
+      '@locales': path.resolve(import.meta.dirname, './public/locales'),
     },
   },
   test: {
     environment: 'jsdom',
-    setupFiles: ['./src/test/setup.ts'],
+    setupFiles: ['./src/integrations/test-setup.ts'],
     css: false,
+    testTimeout: 30_000,
   },
 })

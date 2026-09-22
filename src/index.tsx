@@ -5,11 +5,12 @@ import { RouterProvider } from '@tanstack/react-router'
 
 import '@/index.css'
 import { ThemeProvider } from '@/components/theme-provider'
-import { createQueryClient } from '@/lib/query-client'
-import { createAppRouter } from '@/router'
+import { initI18n } from '@/integrations/i18n'
+import { queryClient } from '@/integrations/query-client'
+import { router } from '@/integrations/router'
 
-const queryClient = createQueryClient()
-const router = createAppRouter({ queryClient })
+// Translations load before the first paint, so nothing ever renders a raw key.
+await initI18n()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

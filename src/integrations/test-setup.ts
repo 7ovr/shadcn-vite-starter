@@ -1,8 +1,16 @@
 import '@testing-library/jest-dom/vitest'
-import { cleanup } from '@testing-library/react'
+import { cleanup, configure } from '@testing-library/react'
+import i18n from 'i18next'
+import ICU from 'i18next-icu'
+import { initReactI18next } from 'react-i18next'
 import { afterEach, vi } from 'vitest'
 
-import { resetWaitlist } from '@/features/waitlist/api'
+import en from '@locales/en.json'
+import pl from '@locales/pl.json'
+import { baseI18nOptions } from '@/integrations/i18n'
+
+// Tests call the real PokeAPI, so give network-backed queries time to settle.
+configure({ asyncUtilTimeout: 10_000 })
 
 function noop() {}
 
@@ -18,8 +26,19 @@ vi.stubGlobal('matchMedia', (query: string) => ({
   dispatchEvent: () => false,
 }))
 
-afterEach(() => {
+// Tests bundle the catalogs, since there is no server to load them from.
+await i18n
+  .use(ICU)
+  .use(initReactI18next)
+  .init({
+    ...baseI18nOptions,
+    lng: 'en',
+    resources: { en: { translation: en }, pl: { translation: pl } },
+  })
+
+afterEach(async () => {
   cleanup()
-  resetWaitlist()
+  vi.restoreAllMocks()
   localStorage.clear()
+  await i18n.changeLanguage('en')
 })

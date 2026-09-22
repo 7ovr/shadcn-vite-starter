@@ -7,20 +7,20 @@ import PricingBlock from '@/components/blocks/pricing-1'
 import StatsBlock from '@/components/blocks/stats-1'
 import TestimonialsBlock from '@/components/blocks/testimonials-1'
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute('/(marketing)/_marketing/')({
   component: HomePage,
 })
 
 // Six free 7Ovr blocks. Add more with `pnpm dlx shadcn@latest add @7ovr/<name>`.
 function HomePage() {
   return (
-    <main>
+    <>
       <HeroBlock />
       <StatsBlock />
       <TestimonialsBlock />
       <PricingBlock />
       <FaqsBlock />
       <CtaBlock />
-    </main>
+    </>
   )
 }

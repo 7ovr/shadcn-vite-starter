@@ -3,3 +3,4 @@ packages: []
 allowBuilds:
   # Hooks install through the prepare script instead.
   lefthook: false
+  msw: set this to true or false

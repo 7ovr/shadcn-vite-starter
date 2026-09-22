@@ -9,68 +9,140 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as WaitlistRouteImport } from './routes/waitlist'
+import { Route as appAppRouteImport } from './routes/(app)/_app'
+import { Route as marketingMarketingRouteImport } from './routes/(marketing)/_marketing'
+import { Route as marketingMarketingIndexRouteImport } from './routes/(marketing)/_marketing/index'
+import { Route as appAppPokemonIndexRouteImport } from './routes/(app)/_app/pokemon/index'
+import { Route as appAppPokemonNameRouteImport } from './routes/(app)/_app/pokemon/$name'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const appAppRoute = appAppRouteImport.update({
+  id: '/(app)/_app',
   getParentRoute: () => rootRouteImport,
 } as any)
-const WaitlistRoute = WaitlistRouteImport.update({
-  id: '/waitlist',
-  path: '/waitlist',
+const marketingMarketingRoute = marketingMarketingRouteImport.update({
+  id: '/(marketing)/_marketing',
   getParentRoute: () => rootRouteImport,
+} as any)
+const marketingMarketingIndexRoute = marketingMarketingIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => marketingMarketingRoute,
+} as any)
+const appAppPokemonIndexRoute = appAppPokemonIndexRouteImport.update({
+  id: '/pokemon/',
+  path: '/pokemon/',
+  getParentRoute: () => appAppRoute,
+} as any)
+const appAppPokemonNameRoute = appAppPokemonNameRouteImport.update({
+  id: '/pokemon/$name',
+  path: '/pokemon/$name',
+  getParentRoute: () => appAppRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/waitlist': typeof WaitlistRoute
+  '/': typeof marketingMarketingIndexRoute
+  '/pokemon/$name': typeof appAppPokemonNameRoute
+  '/pokemon/': typeof appAppPokemonIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/waitlist': typeof WaitlistRoute
+  '/': typeof marketingMarketingIndexRoute
+  '/pokemon/$name': typeof appAppPokemonNameRoute
+  '/pokemon': typeof appAppPokemonIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/waitlist': typeof WaitlistRoute
+  '/(app)/_app': typeof appAppRouteWithChildren
+  '/(marketing)/_marketing': typeof marketingMarketingRouteWithChildren
+  '/(marketing)/_marketing/': typeof marketingMarketingIndexRoute
+  '/(app)/_app/pokemon/$name': typeof appAppPokemonNameRoute
+  '/(app)/_app/pokemon/': typeof appAppPokemonIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/waitlist'
+  fullPaths: '/' | '/pokemon/$name' | '/pokemon/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/waitlist'
-  id: '__root__' | '/' | '/waitlist'
+  to: '/' | '/pokemon/$name' | '/pokemon'
+  id:
+    | '__root__'
+    | '/(app)/_app'
+    | '/(marketing)/_marketing'
+    | '/(marketing)/_marketing/'
+    | '/(app)/_app/pokemon/$name'
+    | '/(app)/_app/pokemon/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  WaitlistRoute: typeof WaitlistRoute
+  appAppRoute: typeof appAppRouteWithChildren
+  marketingMarketingRoute: typeof marketingMarketingRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/(app)/_app': {
+      id: '/(app)/_app'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof appAppRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/waitlist': {
-      id: '/waitlist'
-      path: '/waitlist'
-      fullPath: '/waitlist'
-      preLoaderRoute: typeof WaitlistRouteImport
+    '/(marketing)/_marketing': {
+      id: '/(marketing)/_marketing'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof marketingMarketingRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/(marketing)/_marketing/': {
+      id: '/(marketing)/_marketing/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof marketingMarketingIndexRouteImport
+      parentRoute: typeof marketingMarketingRoute
+    }
+    '/(app)/_app/pokemon/': {
+      id: '/(app)/_app/pokemon/'
+      path: '/pokemon'
+      fullPath: '/pokemon/'
+      preLoaderRoute: typeof appAppPokemonIndexRouteImport
+      parentRoute: typeof appAppRoute
+    }
+    '/(app)/_app/pokemon/$name': {
+      id: '/(app)/_app/pokemon/$name'
+      path: '/pokemon/$name'
+      fullPath: '/pokemon/$name'
+      preLoaderRoute: typeof appAppPokemonNameRouteImport
+      parentRoute: typeof appAppRoute
     }
   }
 }
 
+interface appAppRouteChildren {
+  appAppPokemonNameRoute: typeof appAppPokemonNameRoute
+  appAppPokemonIndexRoute: typeof appAppPokemonIndexRoute
+}
+
+const appAppRouteChildren: appAppRouteChildren = {
+  appAppPokemonNameRoute: appAppPokemonNameRoute,
+  appAppPokemonIndexRoute: appAppPokemonIndexRoute,
+}
+
+const appAppRouteWithChildren =
+  appAppRoute._addFileChildren(appAppRouteChildren)
+
+interface marketingMarketingRouteChildren {
+  marketingMarketingIndexRoute: typeof marketingMarketingIndexRoute
+}
+
+const marketingMarketingRouteChildren: marketingMarketingRouteChildren = {
+  marketingMarketingIndexRoute: marketingMarketingIndexRoute,
+}
+
+const marketingMarketingRouteWithChildren =
+  marketingMarketingRoute._addFileChildren(marketingMarketingRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  WaitlistRoute: WaitlistRoute,
+  appAppRoute: appAppRouteWithChildren,
+  marketingMarketingRoute: marketingMarketingRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -7,3 +7,5 @@ export function createQueryClient() {
     },
   })
 }
+
+export const queryClient = createQueryClient()

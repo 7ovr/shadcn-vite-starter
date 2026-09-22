@@ -11,5 +11,12 @@
     "stylesheet": "src/index.css",
     "functions": ["cn", "cva"]
   },
-  "ignorePatterns": ["dist/", "coverage/", "pnpm-lock.yaml", "src/route-tree.gen.ts"]
+  "ignorePatterns": [
+    "dist/",
+    "coverage/",
+    "pnpm-lock.yaml",
+    "src/route-tree.gen.ts",
+    ".claude/skills/",
+    "skills-lock.json"
+  ]
 }
