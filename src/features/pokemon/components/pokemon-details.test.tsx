@@ -17,6 +17,16 @@ describe('pokemon details', () => {
     expect(screen.getByRole('img', { name: 'Official artwork of bulbasaur' })).toBeInTheDocument()
   })
 
+  it('shows a 404 for a Pokémon that does not exist', async () => {
+    await renderRoute('/pokemon/not-a-pokemon')
+
+    expect(await screen.findByRole('heading', { name: 'Pokémon Not Found' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Back To The List' })).toHaveAttribute(
+      'href',
+      '/pokemon',
+    )
+  })
+
   it('formats numbers for the current language', async () => {
     await renderRoute('/pokemon/bulbasaur')
     await screen.findByText('6.9 kg')

@@ -85,6 +85,14 @@ describe('pokemon table', () => {
     expect(await within(table).findByText('151 Pokémonów łącznie.')).toBeInTheDocument()
   })
 
+  it('links each name to its detail page', async () => {
+    const { user, table } = await setup()
+
+    await user.click(within(table).getByRole('link', { name: 'bulbasaur' }))
+
+    expect(await screen.findByRole('heading', { level: 1, name: 'bulbasaur' })).toBeInTheDocument()
+  })
+
   it('contains a failed load to its section and recovers on retry', async () => {
     vi.spyOn(http, 'get').mockRejectedValueOnce(new Error('Network Error'))
     const user = userEvent.setup()
