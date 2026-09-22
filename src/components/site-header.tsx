@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next'
 import { LanguageSwitcher } from '@/components/language-switcher'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { buttonVariants } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
 
 const NAV = [
   { to: '/', label: 'header.home' },
@@ -30,10 +29,7 @@ export function SiteHeader() {
                 to={item.to}
                 activeOptions={{ exact: item.to === '/' }}
                 activeProps={{ 'aria-current': 'page' }}
-                className={cn(
-                  buttonVariants({ variant: 'ghost', size: 'sm' }),
-                  'text-muted-foreground aria-[current=page]:bg-muted aria-[current=page]:text-foreground',
-                )}
+                className={buttonVariants({ variant: 'nav', size: 'sm' })}
               >
                 {t(item.label)}
               </Link>

@@ -1,4 +1,5 @@
 import { Link, createFileRoute, notFound } from '@tanstack/react-router'
+import { preload } from 'react-dom'
 import { isAxiosError } from 'axios'
 import { SearchXIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
@@ -13,7 +14,8 @@ export const Route = createFileRoute('/(app)/_app/pokemon/$name')({
   // Awaited on purpose: an unknown Pokemon must become a 404 before the page renders.
   loader: async ({ context: { queryClient }, params }) => {
     try {
-      await queryClient.ensureQueryData(pokemonOptions(params.name))
+      const pokemon = await queryClient.ensureQueryData(pokemonOptions(params.name))
+      if (pokemon.imageUrl) preload(pokemon.imageUrl, { as: 'image' })
     } catch (error) {
       if (isAxiosError(error) && error.response?.status === 404) throw notFound()
       throw error

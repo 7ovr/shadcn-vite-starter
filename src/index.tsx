@@ -9,8 +9,8 @@ import { initI18n } from '@/integrations/i18n'
 import { queryClient } from '@/integrations/query-client'
 import { router } from '@/integrations/router'
 
-// Translations load before the first paint, so nothing ever renders a raw key.
-await initI18n()
+// Translations and the first route's data load together; both finish before the first paint.
+await Promise.all([initI18n(), router.load()])
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

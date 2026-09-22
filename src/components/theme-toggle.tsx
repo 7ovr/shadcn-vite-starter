@@ -6,18 +6,10 @@ import { Button } from '@/components/ui/button'
 
 export function ThemeToggle() {
   const { t } = useTranslation()
-  const { setTheme } = useTheme()
+  const { toggleTheme } = useTheme()
 
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      aria-label={t('header.theme')}
-      // Read the applied class, so "system" flips to the opposite of what is showing.
-      onClick={() =>
-        setTheme(document.documentElement.classList.contains('dark') ? 'light' : 'dark')
-      }
-    >
+    <Button variant="ghost" size="icon" aria-label={t('header.theme')} onClick={toggleTheme}>
       <SunIcon className="hidden dark:block" />
       <MoonIcon className="dark:hidden" />
     </Button>
