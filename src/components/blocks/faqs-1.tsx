@@ -34,7 +34,7 @@ export default function FaqsBlock() {
       <div className="w-full max-w-2xl">
         <div className="text-center">
           <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl">
-            Frequently asked questions
+            Frequently Asked Questions
           </h2>
           <p className="mt-3 text-muted-foreground">Answers to the questions we hear most often.</p>
         </div>

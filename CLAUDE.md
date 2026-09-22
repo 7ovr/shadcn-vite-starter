@@ -15,10 +15,11 @@ How to write code in this repository: conventions, patterns and constraints. Set
 
 - **kebab-case filenames**, such as `pokemon-search.tsx`. TanStack route conventions like `__root.tsx`, `_app.tsx`, `(app)/` and `$name.tsx` are the only exception.
 - **Always import through an alias.** `@/` maps to `src/*` and `@locales/` to `public/locales/*`. No relative imports, not even inside a feature folder.
-- **Colocate tests** with the file they cover: `use-mobile.test.ts` sits next to `use-mobile.ts`. Never put tests in `src/routes/`, because the router plugin treats every file there as a route. Test routes from `src/integrations/router.test.tsx` or the feature folder.
+- **Colocate tests** with the file they cover: `api.test.ts` sits next to `api.ts`. Never put tests in `src/routes/`, because the router plugin treats every file there as a route. Test routes from `src/integrations/router.test.tsx` or the feature folder.
 - **Formatting** is oxfmt: 2-space indent, single quotes, trailing commas, 100-character lines, no semicolons. The pre-commit hook formats staged files; `pnpm format` does the whole repo.
 - **Comments only when really necessary**, one line at most, and never a ticket or issue reference. Prefer a clearer name over an explanation.
 - **No em dashes anywhere**: code, comments, UI copy, translations, docs, commits and PRs. Use a plain hyphen or rephrase. The only exception is vendored third-party content, the installed skills in `.claude/skills/` and `.agents/skills/` other than our own `sync-translations`, which we never hand-edit.
+- **Title Case for English labels**, capitalising every word: headings, titles, buttons, links, navigation, field labels, table headers, badges and the `aria-label` of a control, such as "Find A Pokémon" and "Back To The List". Sentences stay in sentence case: descriptions, error messages, captions, helper text, FAQ questions and status lines like "Page 1 of 16". Other languages follow their own rules, so Polish uses sentence case. Show data such as Pokémon names and types through `toTitleCase`, not the CSS `capitalize` class, so the text people and screen readers get matches the screen.
 - **Docs are for humans.** The README and other docs are written for people using, supporting or deploying the project: plain language, concise, easy to follow. Guidance for whoever writes code belongs in this file.
 - **Commits** follow Conventional Commits (`feat:`, `fix:`, `chore:`, `docs:`, `test:`). No `Co-Authored-By` lines in commits or PRs; `.claude/settings.json` turns Claude Code's attribution off. Never bypass the hooks with `--no-verify`.
 
@@ -90,7 +91,7 @@ Shared code lives in `src/lib/` (utilities, config, the key factory, test helper
 
 `no-restyle` runs with no allowlist: a shadcn component accepts no `className` from outside. Not colour, not typography, not spacing, and not layout or margin either. When a page needs a different treatment there are two ways out:
 
-- **Add a variant** to the component in `src/components/ui/` and pass it. Existing examples: `Skeleton` `fill`, and `EmptyTitle` `size` plus a `level` prop that renders it as a heading.
+- **Add a variant** to the component in `src/components/ui/` and pass it. Existing examples: `Button` `nav` for header links, `Skeleton` `fill`, and `EmptyTitle` `size` plus a `level` prop that renders it as a heading.
 - **Put the layout classes on a plain wrapper element** around the component. This is right for one-off positioning, such as `<div className="w-full max-w-sm"><Card>`, and always for `Skeleton`, whose size belongs to the surrounding layout.
 
 `src/components/ui/` is ignored by the linter, because those files define the variants the rules enforce. It is the one place where editing generated shadcn files is expected. Switching presets or re-running `shadcn add` overwrites them and silently drops the variants; `pnpm typecheck` catches it, because call sites keep passing props the regenerated component no longer accepts. Re-apply the variants to the new files rather than reverting.
@@ -106,7 +107,7 @@ Also:
 
 ### 7Ovr blocks
 
-Install with `pnpm dlx shadcn@latest add @7ovr/<name>`; they land in `src/components/blocks/` and are ours to edit in place. Pro blocks come from `@7ovr-pro` and need `REGISTRY_TOKEN` in `.env`. Blocks are exempt from the design-system rules in `.oxlintrc.json`, since they ship their own styling.
+Install with `pnpm dlx shadcn@latest add @7ovr/<name>`; they land in `src/components/blocks/` and are ours to edit in place. Pro blocks come from `@7ovr-pro` and need `REGISTRY_TOKEN` in `.env`. Blocks ship their own styling, so `.oxlintrc.json` turns off five of the six design-system rules for them; `no-unknown-classes` still applies.
 
 ### Tests
 

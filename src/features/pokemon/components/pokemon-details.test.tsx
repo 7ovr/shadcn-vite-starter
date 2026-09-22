@@ -8,13 +8,13 @@ describe('pokemon details', () => {
   it('shows the number, types, measurements and artwork', async () => {
     await renderRoute('/pokemon/bulbasaur')
 
-    expect(await screen.findByRole('heading', { level: 1, name: 'bulbasaur' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { level: 1, name: 'Bulbasaur' })).toBeInTheDocument()
     expect(screen.getByText('#001')).toBeInTheDocument()
-    expect(screen.getByText('grass')).toBeInTheDocument()
-    expect(screen.getByText('poison')).toBeInTheDocument()
+    expect(screen.getByText('Grass')).toBeInTheDocument()
+    expect(screen.getByText('Poison')).toBeInTheDocument()
     expect(screen.getByText('70 cm')).toBeInTheDocument()
     expect(screen.getByText('6.9 kg')).toBeInTheDocument()
-    expect(screen.getByRole('img', { name: 'Official artwork of bulbasaur' })).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: 'Official artwork of Bulbasaur' })).toBeInTheDocument()
   })
 
   it('shows a 404 for a Pokémon that does not exist', async () => {

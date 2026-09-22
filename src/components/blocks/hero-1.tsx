@@ -15,7 +15,7 @@ export default function HeroBlock() {
         </Badge>
 
         <h1 className="mt-6 font-heading text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-          Build your next product, faster
+          Build Your Next Product, Faster
         </h1>
 
         <p className="mt-5 max-w-2xl text-lg text-muted-foreground">

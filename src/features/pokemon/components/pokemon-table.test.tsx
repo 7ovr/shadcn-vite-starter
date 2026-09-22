@@ -33,7 +33,7 @@ describe('pokemon table', () => {
     const { table } = await setup()
 
     expect(firstColumn(table)).toHaveLength(10)
-    expect(firstColumn(table)[0]).toBe('bulbasaur')
+    expect(firstColumn(table)[0]).toBe('Bulbasaur')
     expect(within(table).getByText('#001')).toBeInTheDocument()
     expect(screen.getByText('Page 1 of 16')).toBeInTheDocument()
   })
@@ -44,11 +44,11 @@ describe('pokemon table', () => {
     expect(previous).toBeDisabled()
 
     await user.click(screen.getByRole('button', { name: 'Next' }))
-    expect(firstColumn(table)[0]).toBe('metapod')
+    expect(firstColumn(table)[0]).toBe('Metapod')
     expect(screen.getByText('Page 2 of 16')).toBeInTheDocument()
 
     await user.click(previous)
-    expect(firstColumn(table)[0]).toBe('bulbasaur')
+    expect(firstColumn(table)[0]).toBe('Bulbasaur')
   })
 
   it('sorts by name ascending, then descending', async () => {
@@ -56,10 +56,10 @@ describe('pokemon table', () => {
     const sortByName = within(table).getByRole('button', { name: 'Name' })
 
     await user.click(sortByName)
-    expect(firstColumn(table)[0]).toBe('abra')
+    expect(firstColumn(table)[0]).toBe('Abra')
 
     await user.click(sortByName)
-    expect(firstColumn(table)[0]).toBe('zubat')
+    expect(firstColumn(table)[0]).toBe('Zubat')
   })
 
   it('reports the sort direction to assistive technology', async () => {
@@ -88,9 +88,9 @@ describe('pokemon table', () => {
   it('links each name to its detail page', async () => {
     const { user, table } = await setup()
 
-    await user.click(within(table).getByRole('link', { name: 'bulbasaur' }))
+    await user.click(within(table).getByRole('link', { name: 'Bulbasaur' }))
 
-    expect(await screen.findByRole('heading', { level: 1, name: 'bulbasaur' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { level: 1, name: 'Bulbasaur' })).toBeInTheDocument()
   })
 
   it('shows an empty state when the list has no Pokémon', async () => {

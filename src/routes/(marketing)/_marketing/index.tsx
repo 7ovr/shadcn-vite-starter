@@ -11,7 +11,6 @@ export const Route = createFileRoute('/(marketing)/_marketing/')({
   component: HomePage,
 })
 
-// Six free 7Ovr blocks. Add more with `pnpm dlx shadcn@latest add @7ovr/<name>`.
 function HomePage() {
   return (
     <>

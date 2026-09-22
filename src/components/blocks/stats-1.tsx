@@ -3,10 +3,10 @@ import { Separator } from '@/components/ui/separator'
 import { ArrowUp } from 'lucide-react'
 
 const stats = [
-  { value: '12k+', label: 'Active customers', delta: '+18%' },
-  { value: '99.9%', label: 'Uptime guarantee', delta: '+0.1%' },
-  { value: '4.9/5', label: 'Average rating', delta: '+0.3' },
-  { value: '150+', label: 'Countries served', delta: '+12' },
+  { value: '12k+', label: 'Active Customers', delta: '+18%' },
+  { value: '99.9%', label: 'Uptime Guarantee', delta: '+0.1%' },
+  { value: '4.9/5', label: 'Average Rating', delta: '+0.3' },
+  { value: '150+', label: 'Countries Served', delta: '+12' },
 ]
 
 export default function StatsBlock() {
@@ -15,7 +15,7 @@ export default function StatsBlock() {
       <div className="mx-auto w-full max-w-5xl">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl">
-            Trusted at scale
+            Trusted At Scale
           </h2>
           <p className="mt-3 text-muted-foreground">The numbers product teams rely on every day.</p>
         </div>

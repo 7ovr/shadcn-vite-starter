@@ -19,7 +19,7 @@ const tiers = [
     monthly: 0,
     annual: 0,
     description: 'For side projects and getting started.',
-    features: ['Up to 3 projects', 'Community support', '1 GB storage'],
+    features: ['Up To 3 Projects', 'Community Support', '1 GB Storage'],
     cta: 'Get Started',
     featured: false,
   },
@@ -28,7 +28,7 @@ const tiers = [
     monthly: 29,
     annual: 23,
     description: 'For growing teams that ship every day.',
-    features: ['Unlimited projects', 'Priority support', '50 GB storage', 'Advanced analytics'],
+    features: ['Unlimited Projects', 'Priority Support', '50 GB Storage', 'Advanced Analytics'],
     cta: 'Start Free Trial',
     featured: true,
   },
@@ -37,7 +37,7 @@ const tiers = [
     monthly: 99,
     annual: 79,
     description: 'For organizations with advanced needs.',
-    features: ['Everything In Pro', 'Dedicated support', 'Unlimited storage', 'SSO and audit logs'],
+    features: ['Everything In Pro', 'Dedicated Support', 'Unlimited Storage', 'SSO And Audit Logs'],
     cta: 'Contact Sales',
     featured: false,
   },
@@ -53,7 +53,7 @@ export default function PricingBlock() {
       <div className="mx-auto w-full max-w-5xl">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl">
-            Pricing that scales with you
+            Pricing That Scales With You
           </h2>
           <p className="mt-3 text-muted-foreground">
             Start for free, then pick a plan when you&apos;re ready to grow.

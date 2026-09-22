@@ -8,7 +8,7 @@ import { renderRoute } from '@/lib/test-utils'
 async function setup() {
   const user = userEvent.setup()
   const { router } = await renderRoute('/pokemon')
-  const query = await screen.findByLabelText('Name or number')
+  const query = await screen.findByLabelText('Name Or Number')
   const submit = screen.getByRole('button', { name: 'Find Pokémon' })
   return { user, router, query, submit }
 }
@@ -38,7 +38,7 @@ describe('pokemon search', () => {
     await user.type(query, '  Pikachu ')
     await user.click(submit)
 
-    expect(await screen.findByRole('heading', { level: 1, name: 'pikachu' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { level: 1, name: 'Pikachu' })).toBeInTheDocument()
     expect(router.state.location.pathname).toBe('/pokemon/pikachu')
   })
 
@@ -48,7 +48,7 @@ describe('pokemon search', () => {
     await user.type(query, '25')
     await user.click(submit)
 
-    expect(await screen.findByRole('heading', { level: 1, name: 'pikachu' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { level: 1, name: 'Pikachu' })).toBeInTheDocument()
   })
 
   it('re-translates errors already on screen when the language changes', async () => {

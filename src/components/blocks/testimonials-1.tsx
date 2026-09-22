@@ -45,7 +45,7 @@ export default function TestimonialsBlock() {
             Testimonials
           </span>
           <h2 className="mt-4 font-heading text-4xl font-bold tracking-tight sm:text-5xl">
-            Loved by teams that ship
+            Loved By Teams That Ship
           </h2>
           <p className="mt-4 text-base text-muted-foreground">
             Hear from the engineers, designers, and founders who build with Acme every day.

@@ -27,7 +27,7 @@ import {
 } from '@/components/ui/table'
 import { pokemonListOptions } from '@/features/pokemon/api/queries'
 import type { PokemonSummary } from '@/features/pokemon/lib/types'
-import { formatPokedexNumber } from '@/features/pokemon/lib/format'
+import { formatPokedexNumber, toTitleCase } from '@/features/pokemon/lib/format'
 
 // Features and columns live at module scope so the table keeps stable references.
 const features = tableFeatures({
@@ -51,9 +51,9 @@ const columns = column.columns([
       <Link
         to="/pokemon/$name"
         params={{ name: info.getValue() }}
-        className="font-medium capitalize underline-offset-4 hover:underline"
+        className="font-medium underline-offset-4 hover:underline"
       >
-        {info.getValue()}
+        {toTitleCase(info.getValue())}
       </Link>
     ),
   }),

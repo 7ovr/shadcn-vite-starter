@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest'
 
 import { renderRoute } from '@/lib/test-utils'
 
-const HERO = { level: 1, name: 'Build your next product, faster' }
+const HERO = { level: 1, name: 'Build Your Next Product, Faster' }
 
 describe('router', () => {
   it('renders the home page with all six blocks', async () => {
@@ -12,11 +12,11 @@ describe('router', () => {
 
     expect(await screen.findByRole('heading', HERO)).toBeInTheDocument()
     for (const name of [
-      'Trusted at scale',
-      'Loved by teams that ship',
-      'Pricing that scales with you',
-      'Frequently asked questions',
-      'Start building faster today.',
+      'Trusted At Scale',
+      'Loved By Teams That Ship',
+      'Pricing That Scales With You',
+      'Frequently Asked Questions',
+      'Start Building Faster Today',
     ]) {
       expect(screen.getByRole('heading', { name })).toBeInTheDocument()
     }

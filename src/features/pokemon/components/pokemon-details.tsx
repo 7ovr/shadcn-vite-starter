@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import { Badge } from '@/components/ui/badge'
 import { pokemonOptions } from '@/features/pokemon/api/queries'
-import { formatPokedexNumber } from '@/features/pokemon/lib/format'
+import { formatPokedexNumber, toTitleCase } from '@/features/pokemon/lib/format'
 
 export function PokemonDetails({ name }: { name: string }) {
   const { t } = useTranslation()
@@ -14,7 +14,7 @@ export function PokemonDetails({ name }: { name: string }) {
       {pokemon.imageUrl ? (
         <img
           src={pokemon.imageUrl}
-          alt={t('pokemon.detail.image', { name: pokemon.name })}
+          alt={t('pokemon.detail.image', { name: toTitleCase(pokemon.name) })}
           width={240}
           height={240}
           className="size-60 rounded-xl bg-muted"
@@ -24,8 +24,8 @@ export function PokemonDetails({ name }: { name: string }) {
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-1">
           <p className="text-sm text-muted-foreground">{formatPokedexNumber(pokemon.id)}</p>
-          <h1 className="font-heading text-3xl font-bold tracking-tight capitalize">
-            {pokemon.name}
+          <h1 className="font-heading text-3xl font-bold tracking-tight">
+            {toTitleCase(pokemon.name)}
           </h1>
         </div>
 
@@ -34,7 +34,7 @@ export function PokemonDetails({ name }: { name: string }) {
           <dd className="flex gap-1">
             {pokemon.types.map((type) => (
               <Badge key={type} variant="secondary">
-                {type}
+                {toTitleCase(type)}
               </Badge>
             ))}
           </dd>
