@@ -1,21 +1,22 @@
-import { lazy, Suspense } from 'react'
 import type { QueryClient } from '@tanstack/react-query'
-import { Link, Outlet, createRootRouteWithContext } from '@tanstack/react-router'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import {
+  Link,
+  Outlet,
+  createRootRouteWithContext,
+  type ErrorComponentProps,
+} from '@tanstack/react-router'
+import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
+import { SearchXIcon, TriangleAlertIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
-import { ErrorFallback } from '@/components/error-fallback'
+import { PageState } from '@/components/page-state'
 import { SiteHeader } from '@/components/site-header'
-import { buttonVariants } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 
 export type RouterContext = {
   queryClient: QueryClient
 }
-
-// Loaded only in development, so the devtools never reach the production bundle.
-const Devtools =
-  import.meta.env.DEV && import.meta.env.MODE !== 'test'
-    ? lazy(() => import('@/components/devtools'))
-    : () => null
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: RootLayout,
@@ -23,14 +24,14 @@ export const Route = createRootRouteWithContext<RouterContext>()({
   errorComponent: RootError,
 })
 
+// Both devtools render nothing outside development, so production builds drop them.
 function RootLayout() {
   return (
     <>
       <SiteHeader />
       <Outlet />
-      <Suspense>
-        <Devtools />
-      </Suspense>
+      <TanStackRouterDevtools position="bottom-right" />
+      <ReactQueryDevtools buttonPosition="bottom-left" />
     </>
   )
 }
@@ -39,20 +40,36 @@ function NotFound() {
   const { t } = useTranslation()
 
   return (
-    <main className="mx-auto flex max-w-md flex-col items-center gap-4 px-4 py-32 text-center">
-      <h1 className="font-heading text-2xl font-semibold">{t('notFound.title')}</h1>
-      <p className="text-sm text-muted-foreground">{t('notFound.description')}</p>
-      <Link to="/" className={buttonVariants()}>
-        {t('notFound.backHome')}
-      </Link>
+    <main className="mx-auto w-full max-w-md px-4">
+      <PageState
+        icon={SearchXIcon}
+        title={t('notFound.title')}
+        description={t('notFound.description')}
+        action={
+          <Link to="/" className={buttonVariants()}>
+            {t('notFound.backHome')}
+          </Link>
+        }
+      />
     </main>
   )
 }
 
-function RootError(props: React.ComponentProps<typeof ErrorFallback>) {
+function RootError({ reset }: ErrorComponentProps) {
+  const { t } = useTranslation()
+
   return (
-    <main className="mx-auto max-w-md px-4 py-32">
-      <ErrorFallback {...props} />
+    <main role="alert" className="mx-auto w-full max-w-md px-4">
+      <PageState
+        icon={TriangleAlertIcon}
+        title={t('error.title')}
+        description={t('error.description')}
+        action={
+          <Button variant="outline" onClick={reset}>
+            {t('error.retry')}
+          </Button>
+        }
+      />
     </main>
   )
 }

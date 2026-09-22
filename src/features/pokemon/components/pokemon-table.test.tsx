@@ -93,6 +93,14 @@ describe('pokemon table', () => {
     expect(await screen.findByRole('heading', { level: 1, name: 'bulbasaur' })).toBeInTheDocument()
   })
 
+  it('shows an empty state when the list has no Pokémon', async () => {
+    vi.spyOn(http, 'get').mockResolvedValueOnce({ data: { results: [] } })
+    await renderRoute('/pokemon')
+
+    expect(await screen.findByText('No Pokémon Yet')).toBeInTheDocument()
+    expect(screen.queryByRole('table', { name: 'Pokémon' })).not.toBeInTheDocument()
+  })
+
   it('contains a failed load to its section and recovers on retry', async () => {
     vi.spyOn(http, 'get').mockRejectedValueOnce(new Error('Network Error'))
     const user = userEvent.setup()

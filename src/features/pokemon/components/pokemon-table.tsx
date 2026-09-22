@@ -11,10 +11,11 @@ import {
 } from '@tanstack/react-table'
 import { Link } from '@tanstack/react-router'
 import type { ParseKeys } from 'i18next'
-import { ChevronDownIcon, ChevronUpIcon, ChevronsUpDownIcon } from 'lucide-react'
+import { ChevronDownIcon, ChevronUpIcon, ChevronsUpDownIcon, InboxIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { Button } from '@/components/ui/button'
+import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/components/ui/empty'
 import {
   Table,
   TableBody,
@@ -71,6 +72,20 @@ export function PokemonTable() {
     data,
     initialState: { pagination: { pageIndex: 0, pageSize: PAGE_SIZE } },
   })
+
+  if (data.length === 0) {
+    return (
+      <Empty>
+        <EmptyHeader>
+          <EmptyMedia variant="icon">
+            <InboxIcon aria-hidden="true" />
+          </EmptyMedia>
+          <EmptyTitle>{t('pokemon.empty.title')}</EmptyTitle>
+          <EmptyDescription>{t('pokemon.empty.description')}</EmptyDescription>
+        </EmptyHeader>
+      </Empty>
+    )
+  }
 
   return (
     <div className="flex flex-col gap-4">

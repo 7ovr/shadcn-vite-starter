@@ -1,7 +1,9 @@
 import { Link, createFileRoute, notFound } from '@tanstack/react-router'
 import { isAxiosError } from 'axios'
+import { SearchXIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
+import { PageState } from '@/components/page-state'
 import { PendingFallback } from '@/components/pending-fallback'
 import { buttonVariants } from '@/components/ui/button'
 import { pokemonOptions } from '@/features/pokemon/api/queries'
@@ -47,10 +49,11 @@ function PokemonNotFound() {
   const { t } = useTranslation()
 
   return (
-    <div className="flex flex-col items-start gap-4">
-      <h1 className="font-heading text-2xl font-semibold">{t('pokemon.detail.notFound.title')}</h1>
-      <p className="text-muted-foreground">{t('pokemon.detail.notFound.description')}</p>
-      <BackToList />
-    </div>
+    <PageState
+      icon={SearchXIcon}
+      title={t('pokemon.detail.notFound.title')}
+      description={t('pokemon.detail.notFound.description')}
+      action={<BackToList />}
+    />
   )
 }

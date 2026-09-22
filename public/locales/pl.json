@@ -23,6 +23,8 @@
   "pokemon.detail.types": "Typy",
   "pokemon.detail.weight": "Waga",
   "pokemon.detail.weightValue": "{value, number} kg",
+  "pokemon.empty.description": "Lista jest pusta. Wróć, gdy w Pokédeksie pojawią się wpisy.",
+  "pokemon.empty.title": "Brak Pokémonów",
   "pokemon.errors.queryInvalid": "Używaj tylko liter, cyfr i łączników.",
   "pokemon.errors.queryRequired": "Podaj nazwę lub numer.",
   "pokemon.list.description": "Oryginalna 151, wczytywana podczas renderowania strony. Sortuj według dowolnej kolumny.",

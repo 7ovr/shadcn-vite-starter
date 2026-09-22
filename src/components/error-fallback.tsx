@@ -1,9 +1,18 @@
 import { useEffect } from 'react'
 import { useQueryErrorResetBoundary } from '@tanstack/react-query'
 import type { ErrorComponentProps } from '@tanstack/react-router'
+import { TriangleAlertIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { Button } from '@/components/ui/button'
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from '@/components/ui/empty'
 
 export function ErrorFallback({ reset }: ErrorComponentProps) {
   const { t } = useTranslation()
@@ -15,12 +24,21 @@ export function ErrorFallback({ reset }: ErrorComponentProps) {
   }, [queryErrorResetBoundary])
 
   return (
-    <div role="alert" className="flex flex-col items-start gap-3">
-      <p className="font-medium">{t('error.title')}</p>
-      <p className="text-sm text-muted-foreground">{t('error.description')}</p>
-      <Button variant="outline" onClick={reset}>
-        {t('error.retry')}
-      </Button>
+    <div role="alert">
+      <Empty>
+        <EmptyHeader>
+          <EmptyMedia variant="icon">
+            <TriangleAlertIcon aria-hidden="true" />
+          </EmptyMedia>
+          <EmptyTitle>{t('error.title')}</EmptyTitle>
+          <EmptyDescription>{t('error.description')}</EmptyDescription>
+        </EmptyHeader>
+        <EmptyContent>
+          <Button variant="outline" onClick={reset}>
+            {t('error.retry')}
+          </Button>
+        </EmptyContent>
+      </Empty>
     </div>
   )
 }

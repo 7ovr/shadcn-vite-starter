@@ -90,7 +90,7 @@ Shared code lives in `src/lib/` (utilities, config, the key factory, test helper
 
 `no-restyle` runs with no allowlist: a shadcn component accepts no `className` from outside. Not colour, not typography, not spacing, and not layout or margin either. When a page needs a different treatment there are two ways out:
 
-- **Add a variant** to the component in `src/components/ui/` and pass it. For example, `Skeleton` has a `fill` variant.
+- **Add a variant** to the component in `src/components/ui/` and pass it. Existing examples: `Skeleton` `fill`, and `EmptyTitle` `size` plus a `level` prop that renders it as a heading.
 - **Put the layout classes on a plain wrapper element** around the component. This is right for one-off positioning, such as `<div className="w-full max-w-sm"><Card>`, and always for `Skeleton`, whose size belongs to the surrounding layout.
 
 `src/components/ui/` is ignored by the linter, because those files define the variants the rules enforce. It is the one place where editing generated shadcn files is expected. Switching presets or re-running `shadcn add` overwrites them and silently drops the variants; `pnpm typecheck` catches it, because call sites keep passing props the regenerated component no longer accepts. Re-apply the variants to the new files rather than reverting.
@@ -99,7 +99,9 @@ Also:
 
 - Base UI takes `render`, not `asChild`. For navigation, style a router `Link` with `buttonVariants()`; `<Button render={<Link />}>` makes the link report itself as a button.
 - Use theme tokens such as `bg-muted` and `text-success`, never raw colours. Status colours are `success`, `warning`, `info` and `destructive` in `src/index.css`.
+- **State views use the shadcn `Empty` component**: not found, errors, empty lists and any other "nothing to show" state. A whole-page state goes through `PageState` in `src/components/page-state.tsx`, which renders the page's `<h1>`; a state inside a section, like `ErrorFallback`, uses `Empty` directly. Loading states use `Skeleton` through `PendingFallback`.
 - Icon-only buttons need an `aria-label`. Sortable table headers set `aria-sort`.
+- Render the TanStack devtools unconditionally. Both packages render nothing outside development, so production builds leave them out without an environment check.
 - Add shadcn components with `pnpm dlx shadcn@latest add <name>`.
 
 ### 7Ovr blocks

@@ -23,6 +23,8 @@
   "pokemon.detail.types": "Types",
   "pokemon.detail.weight": "Weight",
   "pokemon.detail.weightValue": "{value, number} kg",
+  "pokemon.empty.description": "The list is empty. Check back once the Pokédex has entries.",
+  "pokemon.empty.title": "No Pokémon Yet",
   "pokemon.errors.queryInvalid": "Use letters, numbers and hyphens only.",
   "pokemon.errors.queryRequired": "Enter a name or number.",
   "pokemon.list.description": "The original 151, loaded while the page renders. Sort by any column.",
