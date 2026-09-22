@@ -10,9 +10,7 @@ import {
   useTable,
 } from '@tanstack/react-table'
 import { Link } from '@tanstack/react-router'
-import type { ParseKeys } from 'i18next'
 import { ChevronDownIcon, ChevronUpIcon, ChevronsUpDownIcon, InboxIcon } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
 
 import { Button } from '@/components/ui/button'
 import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/components/ui/empty'
@@ -42,11 +40,11 @@ const column = createColumnHelper<typeof features, PokemonSummary>()
 
 const columns = column.columns([
   column.accessor('id', {
-    header: 'pokemon.table.number',
+    header: 'No.',
     cell: (info) => formatPokedexNumber(info.getValue()),
   }),
   column.accessor('name', {
-    header: 'pokemon.table.name',
+    header: 'Name',
     cell: (info) => (
       <Link
         to="/pokemon/$name"
@@ -64,7 +62,6 @@ const PAGE_SIZE = 10
 const SORT_LABEL = { asc: 'ascending', desc: 'descending' } as const
 
 export function PokemonTable() {
-  const { t } = useTranslation()
   const { data } = useSuspenseQuery(pokemonListOptions())
   const table = useTable({
     features,
@@ -80,8 +77,10 @@ export function PokemonTable() {
           <EmptyMedia variant="icon">
             <InboxIcon aria-hidden="true" />
           </EmptyMedia>
-          <EmptyTitle>{t('pokemon.empty.title')}</EmptyTitle>
-          <EmptyDescription>{t('pokemon.empty.description')}</EmptyDescription>
+          <EmptyTitle>No Pokémon Yet</EmptyTitle>
+          <EmptyDescription>
+            The list is empty. Check back once the Pokédex has entries.
+          </EmptyDescription>
         </EmptyHeader>
       </Empty>
     )
@@ -89,8 +88,8 @@ export function PokemonTable() {
 
   return (
     <div className="flex flex-col gap-4">
-      <Table aria-label={t('pokemon.table.label')}>
-        <TableCaption>{t('pokemon.count', { count: data.length })}</TableCaption>
+      <Table aria-label="Pokémon">
+        <TableCaption>{`${data.length} Pokémon in total.`}</TableCaption>
         <TableHeader>
           {table.getHeaderGroups().map((group) => (
             <TableRow key={group.id}>
@@ -109,7 +108,7 @@ export function PokemonTable() {
                       size="sm"
                       onClick={header.column.getToggleSortingHandler()}
                     >
-                      {t(header.column.columnDef.header as ParseKeys)}
+                      <table.FlexRender header={header} />
                       <SortIcon data-icon="inline-end" aria-hidden="true" />
                     </Button>
                   </TableHead>
@@ -133,10 +132,7 @@ export function PokemonTable() {
 
       <div className="flex items-center justify-between gap-2">
         <p className="text-sm text-muted-foreground">
-          {t('pokemon.table.page', {
-            page: table.state.pagination.pageIndex + 1,
-            total: table.getPageCount(),
-          })}
+          Page {table.state.pagination.pageIndex + 1} of {table.getPageCount()}
         </p>
         <div className="flex gap-2">
           <Button
@@ -145,7 +141,7 @@ export function PokemonTable() {
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            {t('pokemon.table.previous')}
+            Previous
           </Button>
           <Button
             variant="outline"
@@ -153,7 +149,7 @@ export function PokemonTable() {
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            {t('pokemon.table.next')}
+            Next
           </Button>
         </div>
       </div>

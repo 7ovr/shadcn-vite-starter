@@ -14,12 +14,12 @@ How to write code in this repository: conventions, patterns and constraints. Set
 ## Code conventions
 
 - **kebab-case filenames**, such as `pokemon-search.tsx`. TanStack route conventions like `__root.tsx`, `_app.tsx`, `(app)/` and `$name.tsx` are the only exception.
-- **Always import through an alias.** `@/` maps to `src/*` and `@locales/` to `public/locales/*`. No relative imports, not even inside a feature folder.
+- **Always import through the `@/` alias**, which maps to `src/*`. No relative imports, not even inside a feature folder.
 - **Colocate tests** with the file they cover: `api.test.ts` sits next to `api.ts`. Never put tests in `src/routes/`, because the router plugin treats every file there as a route. Test routes from `src/integrations/router.test.tsx` or the feature folder.
 - **Formatting** is oxfmt: 2-space indent, single quotes, trailing commas, 100-character lines, no semicolons. The pre-commit hook formats staged files; `pnpm format` does the whole repo.
 - **Comments only when really necessary**, one line at most, and never a ticket or issue reference. Prefer a clearer name over an explanation.
-- **No em dashes anywhere**: code, comments, UI copy, translations, docs, commits and PRs. Use a plain hyphen or rephrase. The only exception is vendored third-party content, the installed skills in `.claude/skills/` and `.agents/skills/` other than our own `sync-translations`, which we never hand-edit.
-- **Title Case for English labels**, capitalising every word: headings, titles, buttons, links, navigation, field labels, table headers, badges and the `aria-label` of a control, such as "Find A Pokémon" and "Back To The List". Sentences stay in sentence case: descriptions, error messages, captions, helper text, FAQ questions and status lines like "Page 1 of 16". Other languages follow their own rules, so Polish uses sentence case. Show data such as Pokémon names and types through `toTitleCase`, not the CSS `capitalize` class, so the text people and screen readers get matches the screen.
+- **No em dashes anywhere**: code, comments, UI copy, docs, commits and PRs. Use a plain hyphen or rephrase. The only exception is vendored third-party content, the installed skills in `.claude/skills/` and `.agents/skills/`, which we never hand-edit.
+- **English only, in Title Case for labels**, capitalising every word: headings, titles, buttons, links, navigation, field labels, table headers, badges and the `aria-label` of a control, such as "Find A Pokémon" and "Back To The List". Sentences stay in sentence case: descriptions, error messages, captions, helper text, FAQ questions and status lines like "Page 1 of 16". Show data such as Pokémon names and types through `toTitleCase`, not the CSS `capitalize` class, so the text people and screen readers get matches the screen.
 - **Docs are for humans.** The README and other docs are written for people using, supporting or deploying the project: plain language, concise, easy to follow. Guidance for whoever writes code belongs in this file.
 - **Commits** follow Conventional Commits (`feat:`, `fix:`, `chore:`, `docs:`, `test:`). No `Co-Authored-By` lines in commits or PRs; `.claude/settings.json` turns Claude Code's attribution off. Never bypass the hooks with `--no-verify`.
 
@@ -71,19 +71,7 @@ Each feature is self-contained under `src/features/<name>/`:
 - `components/`: the feature's components.
 - `lib/`: feature types, Zod schemas and small helpers.
 
-Shared code lives in `src/lib/` (utilities, config, the key factory, test helpers). Singletons live in `src/integrations/`: the Axios client, the Query client, the router, i18next and the Vitest setup.
-
-### Internationalization
-
-- Catalogs are static files in `public/locales/<lang>.json`, fetched at runtime by `i18next-http-backend`, so a deployment can fix a string without a rebuild. `src/index.tsx` awaits `initI18n()` before the first render, so nothing ever paints a raw key.
-- **Keys are always flat**: `"pokemon.title": "Pokémon"`, never nested objects. `keySeparator` and `nsSeparator` are both `false` to enforce it.
-- ICU MessageFormat handles plurals, selects and numbers. Use each language's plural categories.
-- `src/types/i18next.d.ts` types `t()` from `en.json`, so keys autocomplete and `tsc` catches typos.
-- Keys stay sorted alphabetically. `pnpm sort-messages` sorts them and the pre-commit hook runs it; `pnpm check-messages` fails in CI on unsorted files or catalogs whose keys differ from `en.json`.
-- When `en.json` changes, use the `sync-translations` skill to update the other catalogs.
-- Adding a language takes two steps: the catalog in `public/locales/`, and an entry in `SUPPORTED_LANGUAGES` in `src/lib/config.ts` with its `dir`. A catalog on its own is never loaded.
-- **Zod messages hold translation keys, not translated text** (see `src/features/pokemon/lib/types.ts`), and components resolve them with `t()` at render. A form keeps whatever a field last validated to, so a message translated at validation time would stay in the old language after a switch.
-- The installed 7Ovr blocks ship English copy. Move their strings into the catalogs when you adopt a block.
+Shared code lives in `src/lib/` (utilities, config, the key factory, test helpers). Singletons live in `src/integrations/`: the Axios client, the Query client, the router and the Vitest setup.
 
 ### Design-system lint
 
@@ -117,11 +105,10 @@ Install with `pnpm dlx shadcn@latest add @7ovr/<name>`; they land in `src/compon
 
 ## Skills
 
-Skills for agents working here live in two identical folders: `.claude/skills/` for Claude Code and `.agents/skills/` for every other agent. They are `vercel-react-best-practices`, `vercel-composition-patterns`, `shadcn` and `improve`, pinned in `skills-lock.json`, plus our own `sync-translations`.
+Skills for agents working here live in two identical folders: `.claude/skills/` for Claude Code and `.agents/skills/` for every other agent. They are `vercel-react-best-practices`, `vercel-composition-patterns`, `shadcn` and `improve`, pinned in `skills-lock.json`.
 
 - Add or update a vendored skill for both folders at once, as real files: `pnpm dlx skills add <repo> --skill <name> --agent claude-code universal --copy`. Never hand-edit vendored skills.
-- Our own skills are written by hand; keep the copy in each folder identical.
 
 ## Before you finish
 
-Run `pnpm lint`, `pnpm format:check`, `pnpm check-messages`, `pnpm typecheck`, `pnpm test` and `pnpm build`. CI runs the same checks on every push and pull request.
+Run `pnpm lint`, `pnpm format:check`, `pnpm typecheck`, `pnpm test` and `pnpm build`. CI runs the same checks on every push and pull request.

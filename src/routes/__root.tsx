@@ -8,7 +8,6 @@ import {
 } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import { SearchXIcon, TriangleAlertIcon } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
 
 import { PageState } from '@/components/page-state'
 import { SiteHeader } from '@/components/site-header'
@@ -37,17 +36,15 @@ function RootLayout() {
 }
 
 function NotFound() {
-  const { t } = useTranslation()
-
   return (
     <main className="mx-auto w-full max-w-md px-4">
       <PageState
         icon={SearchXIcon}
-        title={t('notFound.title')}
-        description={t('notFound.description')}
+        title="Page Not Found"
+        description="The page you are looking for does not exist or has moved."
         action={
           <Link to="/" className={buttonVariants()}>
-            {t('notFound.backHome')}
+            Back Home
           </Link>
         }
       />
@@ -56,17 +53,15 @@ function NotFound() {
 }
 
 function RootError({ reset }: ErrorComponentProps) {
-  const { t } = useTranslation()
-
   return (
     <main role="alert" className="mx-auto w-full max-w-md px-4">
       <PageState
         icon={TriangleAlertIcon}
-        title={t('error.title')}
-        description={t('error.description')}
+        title="Something Went Wrong"
+        description="This page could not load. Check your connection and try again."
         action={
           <Button variant="outline" onClick={reset}>
-            {t('error.retry')}
+            Try Again
           </Button>
         }
       />

@@ -1,6 +1,6 @@
 # shadcn-vite-starter
 
-A React starter with the stack already wired: Vite, TypeScript, TanStack Router, Query, Form and Table, i18next, and shadcn/ui on Base UI. It ships a page built from six free [7Ovr](https://7ovr.com) blocks and a working example built on the free [PokéAPI](https://pokeapi.co), so you can start on the product instead of the setup.
+A React starter with the stack already wired: Vite, TypeScript, TanStack Router, Query, Form and Table, and shadcn/ui on Base UI. It ships a page built from six free [7Ovr](https://7ovr.com) blocks and a working example built on the free [PokéAPI](https://pokeapi.co), so you can start on the product instead of the setup.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/7ovr/shadcn-vite-starter&project-name=shadcn-vite-starter&repository-name=shadcn-vite-starter)
 
@@ -29,7 +29,6 @@ Open http://localhost:5173. Installing also sets up the Git hooks that format an
 | Data     | TanStack Query and Axios                                        |
 | Forms    | TanStack Form with Zod validation                               |
 | Tables   | TanStack Table                                                  |
-| i18n     | i18next with ICU messages, English and Polish                   |
 | Tests    | Vitest and Testing Library                                      |
 | Lint     | Oxlint with [`@shadcn/lint`](https://github.com/shadcn-ui/lint) |
 | Format   | oxfmt, which also sorts Tailwind classes                        |
@@ -50,28 +49,22 @@ With `VITE_API_URL=/api`, the dev server forwards every `/api` request to `http:
 
 ## Scripts
 
-| Command               | What it does                                                  |
-| --------------------- | ------------------------------------------------------------- |
-| `pnpm dev`            | Start the dev server, with the TanStack devtools              |
-| `pnpm build`          | Typecheck, then build the site to `dist/`                     |
-| `pnpm preview`        | Serve the production build locally                            |
-| `pnpm test`           | Run the tests once (they need network access for the PokéAPI) |
-| `pnpm test:watch`     | Run the tests and rerun them on every change                  |
-| `pnpm lint`           | Lint the code                                                 |
-| `pnpm lint:fix`       | Lint and fix what can be fixed automatically                  |
-| `pnpm typecheck`      | Check the types                                               |
-| `pnpm format`         | Format every file                                             |
-| `pnpm format:check`   | Check the formatting without changing files                   |
-| `pnpm sort-messages`  | Sort the keys in every translation file                       |
-| `pnpm check-messages` | Check the translation files are sorted and have the same keys |
+| Command             | What it does                                                  |
+| ------------------- | ------------------------------------------------------------- |
+| `pnpm dev`          | Start the dev server, with the TanStack devtools              |
+| `pnpm build`        | Typecheck, then build the site to `dist/`                     |
+| `pnpm preview`      | Serve the production build locally                            |
+| `pnpm test`         | Run the tests once (they need network access for the PokéAPI) |
+| `pnpm test:watch`   | Run the tests and rerun them on every change                  |
+| `pnpm lint`         | Lint the code                                                 |
+| `pnpm lint:fix`     | Lint and fix what can be fixed automatically                  |
+| `pnpm typecheck`    | Check the types                                               |
+| `pnpm format`       | Format every file                                             |
+| `pnpm format:check` | Check the formatting without changing files                   |
 
 ## Project layout
 
 ```
-public/
-└── locales/                    Translations, one file per language
-scripts/
-└── sort-messages.ts            Sorts and checks the translation files
 src/
 ├── routes/                     One file per page
 │   ├── __root.tsx              Header, not found page and error page
@@ -84,9 +77,9 @@ src/
 │   ├── api/                    API calls and queries
 │   ├── components/             Search form, table and detail view
 │   └── lib/                    Types, validation and formatting
-├── integrations/               Axios, Query client, router, i18next, test setup
+├── integrations/               Axios, Query client, router, test setup
 ├── lib/                        Shared helpers, config and the query key factory
-├── types/                      Type declarations for environment and translations
+├── types/                      Type declarations for environment variables
 ├── route-tree.gen.ts           Generated from src/routes, do not edit
 ├── index.tsx                   Starts the app
 └── index.css                   Tailwind and the theme tokens
@@ -96,7 +89,7 @@ src/
 
 The app is a single-page application: the server sends one HTML file and the browser handles every page from there.
 
-**Start-up.** `src/index.tsx` loads the translations for the visitor's language, then renders the app with the shared Query client and router from `src/integrations/`.
+**Start-up.** `src/index.tsx` renders the app with the shared Query client and router from `src/integrations/`.
 
 **Pages.** The router builds its pages from the files in `src/routes/`. Folders in parentheses group pages that share a layout without changing their URL: `(marketing)` pages run full width, `(app)` pages sit in a centred container. Each page is its own bundle, loaded when you first visit or hover a link to it.
 
@@ -106,8 +99,6 @@ The app is a single-page application: the server sends one HTML file and the bro
 - **Some pages must wait.** `/pokemon/$name` waits for its Pokémon, because an unknown name has to show a proper "not found" page instead of an empty one.
 
 **Features.** Each feature keeps its API calls, queries, components and types together in `src/features/<name>/`. To remove the example, delete `src/features/pokemon/` and `src/routes/(app)/_app/pokemon/`, and take its link out of `src/components/site-header.tsx`.
-
-**Translations.** Each language is one flat JSON file in `public/locales/`, loaded at runtime, so a deployment can fix a string without rebuilding the app. The language switcher in the header remembers the choice. Messages use ICU syntax, so plurals and numbers follow each language's rules. To add a language, add its file to `public/locales/` and an entry to `SUPPORTED_LANGUAGES` in `src/lib/config.ts`.
 
 ## Add blocks from 7Ovr
 

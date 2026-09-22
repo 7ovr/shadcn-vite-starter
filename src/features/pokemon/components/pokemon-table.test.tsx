@@ -1,6 +1,5 @@
-import { act, screen, within } from '@testing-library/react'
+import { screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import i18n from 'i18next'
 import { describe, expect, it, vi } from 'vitest'
 
 import { http } from '@/integrations/axios'
@@ -76,13 +75,10 @@ describe('pokemon table', () => {
     expect(nameHeader).toHaveAttribute('aria-sort', 'descending')
   })
 
-  it('counts the list with the plural rules of each language', async () => {
+  it('shows the total in the caption', async () => {
     const { table } = await setup()
 
     expect(within(table).getByText('151 Pokémon in total.')).toBeInTheDocument()
-
-    await act(() => i18n.changeLanguage('pl'))
-    expect(await within(table).findByText('151 Pokémonów łącznie.')).toBeInTheDocument()
   })
 
   it('links each name to its detail page', async () => {

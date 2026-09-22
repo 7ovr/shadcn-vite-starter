@@ -1,12 +1,10 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { useTranslation } from 'react-i18next'
 
 import { Badge } from '@/components/ui/badge'
 import { pokemonOptions } from '@/features/pokemon/api/queries'
 import { formatPokedexNumber, toTitleCase } from '@/features/pokemon/lib/format'
 
 export function PokemonDetails({ name }: { name: string }) {
-  const { t } = useTranslation()
   const { data: pokemon } = useSuspenseQuery(pokemonOptions(name))
 
   return (
@@ -14,7 +12,7 @@ export function PokemonDetails({ name }: { name: string }) {
       {pokemon.imageUrl ? (
         <img
           src={pokemon.imageUrl}
-          alt={t('pokemon.detail.image', { name: toTitleCase(pokemon.name) })}
+          alt={`Official artwork of ${toTitleCase(pokemon.name)}`}
           width={240}
           height={240}
           className="size-60 rounded-xl bg-muted"
@@ -30,7 +28,7 @@ export function PokemonDetails({ name }: { name: string }) {
         </div>
 
         <dl className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
-          <dt className="text-muted-foreground">{t('pokemon.detail.types')}</dt>
+          <dt className="text-muted-foreground">Types</dt>
           <dd className="flex gap-1">
             {pokemon.types.map((type) => (
               <Badge key={type} variant="secondary">
@@ -38,10 +36,10 @@ export function PokemonDetails({ name }: { name: string }) {
               </Badge>
             ))}
           </dd>
-          <dt className="text-muted-foreground">{t('pokemon.detail.height')}</dt>
-          <dd>{t('pokemon.detail.heightValue', { value: pokemon.heightCm })}</dd>
-          <dt className="text-muted-foreground">{t('pokemon.detail.weight')}</dt>
-          <dd>{t('pokemon.detail.weightValue', { value: pokemon.weightKg })}</dd>
+          <dt className="text-muted-foreground">Height</dt>
+          <dd>{`${pokemon.heightCm} cm`}</dd>
+          <dt className="text-muted-foreground">Weight</dt>
+          <dd>{`${pokemon.weightKg} kg`}</dd>
         </dl>
       </div>
     </div>

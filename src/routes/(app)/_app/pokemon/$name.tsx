@@ -2,7 +2,6 @@ import { Link, createFileRoute, notFound } from '@tanstack/react-router'
 import { preload } from 'react-dom'
 import { isAxiosError } from 'axios'
 import { SearchXIcon } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
 
 import { PageState } from '@/components/page-state'
 import { PendingFallback } from '@/components/pending-fallback'
@@ -27,11 +26,9 @@ export const Route = createFileRoute('/(app)/_app/pokemon/$name')({
 })
 
 function BackToList() {
-  const { t } = useTranslation()
-
   return (
     <Link to="/pokemon" className={buttonVariants({ variant: 'outline' })}>
-      {t('pokemon.detail.back')}
+      Back To The List
     </Link>
   )
 }
@@ -48,13 +45,11 @@ function PokemonPage() {
 }
 
 function PokemonNotFound() {
-  const { t } = useTranslation()
-
   return (
     <PageState
       icon={SearchXIcon}
-      title={t('pokemon.detail.notFound.title')}
-      description={t('pokemon.detail.notFound.description')}
+      title="Pokémon Not Found"
+      description="No Pokémon matches this name or number."
       action={<BackToList />}
     />
   )

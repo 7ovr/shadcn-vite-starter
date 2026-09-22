@@ -12,11 +12,10 @@ export type Pokemon = PokemonSummary & {
   imageUrl: string | null
 }
 
-// Messages are translation keys, resolved with t() at render so they follow a language switch.
 export const pokemonSearchSchema = z.object({
   query: z
     .string()
     .trim()
-    .min(1, 'pokemon.errors.queryRequired')
-    .regex(/^[a-zA-Z0-9-]+$/, 'pokemon.errors.queryInvalid'),
+    .min(1, 'Enter a name or number.')
+    .regex(/^[a-zA-Z0-9-]*$/, 'Use letters, numbers and hyphens only.'),
 })

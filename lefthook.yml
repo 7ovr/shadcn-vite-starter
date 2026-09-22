@@ -3,11 +3,6 @@
 pre-commit:
   parallel: false
   jobs:
-    - name: messages
-      glob: 'public/locales/*.json'
-      run: node scripts/sort-messages.ts
-      stage_fixed: true
-
     - name: format
       glob: '*.{js,ts,tsx,css,md,json,yml,yaml,html}'
       run: pnpm exec oxfmt --no-error-on-unmatched-pattern {staged_files}

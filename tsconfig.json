@@ -18,10 +18,8 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
     "paths": {
-      "@/*": ["./src/*"],
-      "@locales/*": ["./public/locales/*"]
-    },
-    "resolveJsonModule": true
+      "@/*": ["./src/*"]
+    }
   },
-  "include": ["src", "scripts", "vite.config.ts"]
+  "include": ["src", "vite.config.ts"]
 }

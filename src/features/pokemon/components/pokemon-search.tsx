@@ -1,7 +1,5 @@
 import { useForm } from '@tanstack/react-form'
 import { useNavigate } from '@tanstack/react-router'
-import type { ParseKeys } from 'i18next'
-import { useTranslation } from 'react-i18next'
 
 import { Button } from '@/components/ui/button'
 import { Field, FieldError, FieldLabel } from '@/components/ui/field'
@@ -9,7 +7,6 @@ import { Input } from '@/components/ui/input'
 import { pokemonSearchSchema } from '@/features/pokemon/lib/types'
 
 export function PokemonSearch() {
-  const { t } = useTranslation()
   const navigate = useNavigate()
 
   const form = useForm({
@@ -32,7 +29,7 @@ export function PokemonSearch() {
           const invalid = field.state.meta.errors.length > 0
           return (
             <Field data-invalid={invalid}>
-              <FieldLabel htmlFor={field.name}>{t('pokemon.search.label')}</FieldLabel>
+              <FieldLabel htmlFor={field.name}>Name Or Number</FieldLabel>
               <div className="flex gap-2">
                 <Input
                   id={field.name}
@@ -43,14 +40,9 @@ export function PokemonSearch() {
                   aria-invalid={invalid}
                   autoComplete="off"
                 />
-                <Button type="submit">{t('pokemon.search.submit')}</Button>
+                <Button type="submit">Find Pokémon</Button>
               </div>
-              {/* Schema messages are translation keys, translated here so they follow a language switch. */}
-              <FieldError
-                errors={field.state.meta.errors.map(
-                  (issue) => issue && { message: t(issue.message as ParseKeys) },
-                )}
-              />
+              <FieldError errors={field.state.meta.errors} />
             </Field>
           )
         }}

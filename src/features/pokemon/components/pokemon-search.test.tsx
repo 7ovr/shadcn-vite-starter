@@ -1,6 +1,5 @@
-import { act, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import i18n from 'i18next'
 import { describe, expect, it } from 'vitest'
 
 import { renderRoute } from '@/lib/test-utils'
@@ -20,6 +19,7 @@ describe('pokemon search', () => {
     await user.click(submit)
 
     expect(await screen.findByText('Enter a name or number.')).toBeInTheDocument()
+    expect(screen.queryByText('Use letters, numbers and hyphens only.')).not.toBeInTheDocument()
   })
 
   it('rejects characters a Pokemon name cannot contain', async () => {
@@ -49,16 +49,5 @@ describe('pokemon search', () => {
     await user.click(submit)
 
     expect(await screen.findByRole('heading', { level: 1, name: 'Pikachu' })).toBeInTheDocument()
-  })
-
-  it('re-translates errors already on screen when the language changes', async () => {
-    const { user, submit } = await setup()
-
-    await user.click(submit)
-    await screen.findByText('Enter a name or number.')
-    await act(() => i18n.changeLanguage('pl'))
-
-    expect(await screen.findByText('Podaj nazwę lub numer.')).toBeInTheDocument()
-    expect(screen.queryByText('Enter a name or number.')).not.toBeInTheDocument()
   })
 })

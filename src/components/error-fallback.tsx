@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { useQueryErrorResetBoundary } from '@tanstack/react-query'
 import type { ErrorComponentProps } from '@tanstack/react-router'
 import { TriangleAlertIcon } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -15,7 +14,6 @@ import {
 } from '@/components/ui/empty'
 
 export function ErrorFallback({ reset }: ErrorComponentProps) {
-  const { t } = useTranslation()
   const queryErrorResetBoundary = useQueryErrorResetBoundary()
 
   // Clear the failed query so retrying fetches again instead of rethrowing the cached error.
@@ -30,12 +28,14 @@ export function ErrorFallback({ reset }: ErrorComponentProps) {
           <EmptyMedia variant="icon">
             <TriangleAlertIcon aria-hidden="true" />
           </EmptyMedia>
-          <EmptyTitle>{t('error.title')}</EmptyTitle>
-          <EmptyDescription>{t('error.description')}</EmptyDescription>
+          <EmptyTitle>Something Went Wrong</EmptyTitle>
+          <EmptyDescription>
+            This section could not load. Check your connection and try again.
+          </EmptyDescription>
         </EmptyHeader>
         <EmptyContent>
           <Button variant="outline" onClick={reset}>
-            {t('error.retry')}
+            Try Again
           </Button>
         </EmptyContent>
       </Empty>

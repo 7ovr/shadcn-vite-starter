@@ -1,5 +1,4 @@
-import { act, screen } from '@testing-library/react'
-import i18n from 'i18next'
+import { screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
 import { renderRoute } from '@/lib/test-utils'
@@ -25,14 +24,5 @@ describe('pokemon details', () => {
       'href',
       '/pokemon',
     )
-  })
-
-  it('formats numbers for the current language', async () => {
-    await renderRoute('/pokemon/bulbasaur')
-    await screen.findByText('6.9 kg')
-
-    await act(() => i18n.changeLanguage('pl'))
-
-    expect(await screen.findByText('6,9 kg')).toBeInTheDocument()
   })
 })
