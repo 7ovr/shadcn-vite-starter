@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment: keep secrets such as REGISTRY_TOKEN out of git
+.env
+.env.*
+!.env.example
+
+# Vercel
+.vercel

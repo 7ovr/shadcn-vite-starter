@@ -1,0 +1,16 @@
+# https://lefthook.dev/configuration/
+# Staged files only, so commits stay fast. CI runs the full lint, typecheck,
+# test and build.
+
+pre-commit:
+  parallel: false
+  jobs:
+    - name: format
+      glob: "*.{js,ts,tsx,css,md,json,yml,html}"
+      run: pnpm exec prettier --write --ignore-unknown {staged_files}
+      stage_fixed: true
+
+    - name: lint
+      glob: "*.{js,ts,tsx}"
+      run: pnpm exec eslint --fix {staged_files}
+      stage_fixed: true
