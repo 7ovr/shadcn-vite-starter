@@ -1,6 +1,6 @@
 # shadcn-vite-starter
 
-A React starter with the stack already wired: Vite, TypeScript, TanStack Router, Query, Form and Table, and shadcn/ui on Base UI. It ships a page built from six free [7Ovr](https://7ovr.com) blocks and a working example of the whole data flow, so you can start on the product instead of the setup.
+A React starter with the stack already wired: Vite, TypeScript, TanStack Router, Query, Form and Table, i18next, and shadcn/ui on Base UI. It ships a page built from six free [7Ovr](https://7ovr.com) blocks and a working example built on the free [PokéAPI](https://pokeapi.co), so you can start on the product instead of the setup.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/7ovr/shadcn-vite-starter&project-name=shadcn-vite-starter&repository-name=shadcn-vite-starter)
 
@@ -26,9 +26,10 @@ Open http://localhost:5173. Installing also sets up the Git hooks that format an
 | Styling  | Tailwind CSS v4 with light and dark theme tokens                |
 | Language | TypeScript 7 in strict mode                                     |
 | Routing  | TanStack Router, file-based and code-split per route            |
-| Data     | TanStack Query, wired into the router                           |
+| Data     | TanStack Query and Axios                                        |
 | Forms    | TanStack Form with Zod validation                               |
 | Tables   | TanStack Table                                                  |
+| i18n     | i18next with ICU messages, English and Polish                   |
 | Tests    | Vitest and Testing Library                                      |
 | Lint     | Oxlint with [`@shadcn/lint`](https://github.com/shadcn-ui/lint) |
 | Format   | oxfmt, which also sorts Tailwind classes                        |
@@ -38,59 +39,75 @@ Open http://localhost:5173. Installing also sets up the Git hooks that format an
 
 Copy `.env.example` to `.env` and fill in what you need. `.env` is ignored by Git.
 
-| Variable         | Required | Used for                                                            |
-| ---------------- | -------- | ------------------------------------------------------------------- |
-| `REGISTRY_TOKEN` | No       | Installing 7Ovr Pro blocks. Read by the shadcn CLI, not by the app. |
+| Variable         | Required | Used for                                                                              |
+| ---------------- | -------- | ------------------------------------------------------------------------------------- |
+| `VITE_API_URL`   | No       | Where API requests go. Defaults to the PokéAPI. Set it to `/api` to use your backend. |
+| `REGISTRY_TOKEN` | No       | Installing 7Ovr Pro blocks. Read by the shadcn CLI, not by the app.                   |
 
-Variables the app itself should read must start with `VITE_`. Vite exposes those to the browser as `import.meta.env.VITE_*`, so never put secrets in them.
+Only variables starting with `VITE_` reach the app, as `import.meta.env.VITE_*`. They end up in the browser, so never put secrets in them.
+
+With `VITE_API_URL=/api`, the dev server forwards every `/api` request to `http://localhost:8080`. Change the target in `vite.config.ts` if your backend runs elsewhere.
 
 ## Scripts
 
-| Command             | What it does                                     |
-| ------------------- | ------------------------------------------------ |
-| `pnpm dev`          | Start the dev server, with the TanStack devtools |
-| `pnpm build`        | Typecheck, then build the site to `dist/`        |
-| `pnpm preview`      | Serve the production build locally               |
-| `pnpm test`         | Run the tests once                               |
-| `pnpm test:watch`   | Run the tests and rerun them on every change     |
-| `pnpm lint`         | Lint the code                                    |
-| `pnpm lint:fix`     | Lint and fix what can be fixed automatically     |
-| `pnpm typecheck`    | Check the types                                  |
-| `pnpm format`       | Format every file                                |
-| `pnpm format:check` | Check the formatting without changing files      |
+| Command               | What it does                                                  |
+| --------------------- | ------------------------------------------------------------- |
+| `pnpm dev`            | Start the dev server, with the TanStack devtools              |
+| `pnpm build`          | Typecheck, then build the site to `dist/`                     |
+| `pnpm preview`        | Serve the production build locally                            |
+| `pnpm test`           | Run the tests once (they need network access for the PokéAPI) |
+| `pnpm test:watch`     | Run the tests and rerun them on every change                  |
+| `pnpm lint`           | Lint the code                                                 |
+| `pnpm lint:fix`       | Lint and fix what can be fixed automatically                  |
+| `pnpm typecheck`      | Check the types                                               |
+| `pnpm format`         | Format every file                                             |
+| `pnpm format:check`   | Check the formatting without changing files                   |
+| `pnpm sort-messages`  | Sort the keys in every translation file                       |
+| `pnpm check-messages` | Check the translation files are sorted and have the same keys |
 
 ## Project layout
 
 ```
+public/
+└── locales/                    Translations, one file per language
+scripts/
+└── sort-messages.ts            Sorts and checks the translation files
 src/
-├── routes/                 One file per page
-│   ├── __root.tsx          Layout, header and the not found page
-│   ├── index.tsx           Home page, built from 7Ovr blocks
-│   └── waitlist.tsx        The example feature's page
+├── routes/                     One file per page
+│   ├── __root.tsx              Header, not found page and error page
+│   ├── (marketing)/            Full-width pages, like the block-built home page
+│   └── (app)/                  Pages in the app layout, like the Pokémon example
 ├── components/
-│   ├── blocks/             Installed 7Ovr blocks, yours to edit
-│   └── ui/                 shadcn/ui components
-├── features/waitlist/      The example feature: API, queries, schema, form, table
-├── lib/                    Shared helpers and the query client
-├── test/                   Test setup and the render helper
-├── router.tsx              Creates the router
-├── route-tree.gen.ts       Generated from src/routes, do not edit
-├── main.tsx                Starts the app
-└── index.css               Tailwind and the theme tokens
+│   ├── blocks/                 Installed 7Ovr blocks, yours to edit
+│   └── ui/                     shadcn/ui components and their variants
+├── features/pokemon/           The example feature
+│   ├── api/                    API calls and queries
+│   ├── components/             Search form, table and detail view
+│   └── lib/                    Types, validation and formatting
+├── integrations/               Axios, Query client, router, i18next, test setup
+├── lib/                        Shared helpers, config and the query key factory
+├── types/                      Type declarations for environment and translations
+├── route-tree.gen.ts           Generated from src/routes, do not edit
+├── index.tsx                   Starts the app
+└── index.css                   Tailwind and the theme tokens
 ```
 
 ## Architecture
 
 The app is a single-page application: the server sends one HTML file and the browser handles every page from there.
 
-1. `main.tsx` creates one TanStack Query client and the router, passes the client to the router, and renders the app inside the theme provider.
-2. The router builds its pages from the files in `src/routes/`. Each page is its own bundle, loaded when you first visit or hover a link to it.
-3. Before a page renders, its `loader` fetches the data it needs into the Query cache, so the page appears with its data and no loading flash.
-4. Components read that data from the cache. When something changes it, such as a form submission, a mutation updates the server and marks the cached data stale, and Query fetches it again.
+**Start-up.** `src/index.tsx` loads the translations for the visitor's language, then renders the app with the shared Query client and router from `src/integrations/`.
 
-`/waitlist` shows the whole loop. The form validates with Zod and submits through a mutation, and the table renders the list and sorts it by any column. The API behind it in `src/features/waitlist/api.ts` is an in-memory stand-in. Replace those functions with `fetch` calls to your backend and the rest keeps working.
+**Pages.** The router builds its pages from the files in `src/routes/`. Folders in parentheses group pages that share a layout without changing their URL: `(marketing)` pages run full width, `(app)` pages sit in a centred container. Each page is its own bundle, loaded when you first visit or hover a link to it.
 
-To remove the example, delete `src/features/waitlist/` and `src/routes/waitlist.tsx`, and take its link out of `src/components/site-header.tsx`.
+**Data.** Every request goes through one Axios client. A page's loader starts its requests before the page renders, in one of two ways:
+
+- **Most pages don't wait.** `/pokemon` starts loading the list and renders at once. Only the table shows a loading state, and if the request fails only the table shows an error with a retry button.
+- **Some pages must wait.** `/pokemon/$name` waits for its Pokémon, because an unknown name has to show a proper "not found" page instead of an empty one.
+
+**Features.** Each feature keeps its API calls, queries, components and types together in `src/features/<name>/`. To remove the example, delete `src/features/pokemon/` and `src/routes/(app)/_app/pokemon/`, and take its link out of `src/components/site-header.tsx`.
+
+**Translations.** Each language is one flat JSON file in `public/locales/`, loaded at runtime, so a deployment can fix a string without rebuilding the app. The language switcher in the header remembers the choice. Messages use ICU syntax, so plurals and numbers follow each language's rules. To add a language, add its file to `public/locales/` and an entry to `SUPPORTED_LANGUAGES` in `src/lib/config.ts`.
 
 ## Add blocks from 7Ovr
 
