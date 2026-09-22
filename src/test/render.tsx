@@ -1,9 +1,9 @@
-import { render } from "@testing-library/react"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { RouterProvider, createMemoryHistory } from "@tanstack/react-router"
+import { render } from '@testing-library/react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { RouterProvider, createMemoryHistory } from '@tanstack/react-router'
 
-import { ThemeProvider } from "@/components/theme-provider"
-import { createAppRouter } from "@/router"
+import { ThemeProvider } from '@/components/theme-provider'
+import { createAppRouter } from '@/router'
 
 export function createTestQueryClient() {
   return new QueryClient({
@@ -25,7 +25,7 @@ export async function renderRoute(path: string) {
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
       </QueryClientProvider>
-    </ThemeProvider>
+    </ThemeProvider>,
   )
 
   return { ...view, router, queryClient }

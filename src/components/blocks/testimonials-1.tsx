@@ -1,39 +1,39 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
-import { Quote } from "lucide-react"
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Card, CardContent, CardFooter } from '@/components/ui/card'
+import { Quote } from 'lucide-react'
 
 const testimonials = [
   {
     quote:
-      "We shipped a polished marketing site in a single afternoon. The blocks dropped in cleanly and looked right in both themes, exactly what our team needed.",
-    name: "Maya Chen",
-    role: "Founder",
-    company: "Northwind",
-    avatar: "https://i.pravatar.cc/150?img=47",
+      'We shipped a polished marketing site in a single afternoon. The blocks dropped in cleanly and looked right in both themes, exactly what our team needed.',
+    name: 'Maya Chen',
+    role: 'Founder',
+    company: 'Northwind',
+    avatar: 'https://i.pravatar.cc/150?img=47',
   },
   {
     quote:
-      "The consistency is what sold us. Every section feels like it belongs together, so our product looks intentional everywhere we deploy it.",
-    name: "Daniel Okafor",
-    role: "Design Lead",
-    company: "Loopline",
-    avatar: "https://i.pravatar.cc/150?img=12",
+      'The consistency is what sold us. Every section feels like it belongs together, so our product looks intentional everywhere we deploy it.',
+    name: 'Daniel Okafor',
+    role: 'Design Lead',
+    company: 'Loopline',
+    avatar: 'https://i.pravatar.cc/150?img=12',
   },
   {
     quote:
-      "Accessible, sharp, and zero config. Our engineers stopped reinventing layouts and started shipping features again within days of adopting it.",
-    name: "Priya Nair",
-    role: "Engineering Manager",
-    company: "Vela",
-    avatar: "https://i.pravatar.cc/150?img=32",
+      'Accessible, sharp, and zero config. Our engineers stopped reinventing layouts and started shipping features again within days of adopting it.',
+    name: 'Priya Nair',
+    role: 'Engineering Manager',
+    company: 'Vela',
+    avatar: 'https://i.pravatar.cc/150?img=32',
   },
 ]
 
 function getInitials(name: string) {
   return name
-    .split(" ")
+    .split(' ')
     .map((part) => part[0])
-    .join("")
+    .join('')
 }
 
 export default function TestimonialsBlock() {
@@ -48,8 +48,7 @@ export default function TestimonialsBlock() {
             Loved by teams that ship
           </h2>
           <p className="mt-4 text-base text-muted-foreground">
-            Hear from the engineers, designers, and founders who build with Acme
-            every day.
+            Hear from the engineers, designers, and founders who build with Acme every day.
           </p>
         </div>
 
@@ -60,10 +59,7 @@ export default function TestimonialsBlock() {
               className="flex flex-col gap-0 border-0 bg-card p-8 transition-colors duration-200 hover:bg-muted"
             >
               <CardContent className="flex flex-1 flex-col gap-5 p-0">
-                <Quote
-                  className="size-8 text-foreground opacity-20"
-                  aria-hidden="true"
-                />
+                <Quote className="size-8 text-foreground opacity-20" aria-hidden="true" />
                 <blockquote className="flex-1 text-base leading-relaxed text-foreground">
                   &ldquo;{quote}&rdquo;
                 </blockquote>
@@ -77,14 +73,9 @@ export default function TestimonialsBlock() {
                   </AvatarFallback>
                 </Avatar>
                 <span className="flex flex-col gap-0.5">
-                  <span className="text-sm font-semibold text-foreground">
-                    {name}
-                  </span>
+                  <span className="text-sm font-semibold text-foreground">{name}</span>
                   <span className="text-xs text-muted-foreground">
-                    {role},{" "}
-                    <span className="font-medium text-foreground">
-                      {company}
-                    </span>
+                    {role}, <span className="font-medium text-foreground">{company}</span>
                   </span>
                 </span>
               </CardFooter>

@@ -1,23 +1,22 @@
-import "@testing-library/jest-dom/vitest"
-import { cleanup } from "@testing-library/react"
-import { afterEach, vi } from "vitest"
+import '@testing-library/jest-dom/vitest'
+import { cleanup } from '@testing-library/react'
+import { afterEach, vi } from 'vitest'
 
-import { resetWaitlist } from "@/features/waitlist/api"
+import { resetWaitlist } from '@/features/waitlist/api'
+
+function noop() {}
 
 // jsdom has no matchMedia, which the theme provider reads for the system scheme.
-vi.stubGlobal(
-  "matchMedia",
-  vi.fn((query: string) => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addEventListener: vi.fn(),
-    removeEventListener: vi.fn(),
-    addListener: vi.fn(),
-    removeListener: vi.fn(),
-    dispatchEvent: vi.fn(),
-  }))
-)
+vi.stubGlobal('matchMedia', (query: string) => ({
+  matches: false,
+  media: query,
+  onchange: null,
+  addEventListener: noop,
+  removeEventListener: noop,
+  addListener: noop,
+  removeListener: noop,
+  dispatchEvent: () => false,
+}))
 
 afterEach(() => {
   cleanup()

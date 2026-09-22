@@ -1,17 +1,14 @@
-# https://lefthook.dev/configuration/
-# Staged files only, so commits stay fast. CI runs the full lint, typecheck,
-# test and build.
+# Staged files only, so commits stay fast; CI runs the full checks.
 
 pre-commit:
   parallel: false
   jobs:
     - name: format
-      glob: "*.{js,ts,tsx,css,md,json,yml,html}"
-      run: pnpm exec prettier --write --ignore-unknown {staged_files}
+      glob: '*.{js,ts,tsx,css,md,json,yml,yaml,html}'
+      run: pnpm exec oxfmt --no-error-on-unmatched-pattern {staged_files}
       stage_fixed: true
 
     - name: lint
-      glob: "*.{js,ts,tsx}"
-      # The generated route tree is ignored on purpose; do not warn when it is staged.
-      run: pnpm exec eslint --fix --no-warn-ignored {staged_files}
+      glob: '*.{js,ts,tsx}'
+      run: pnpm exec oxlint --fix {staged_files}
       stage_fixed: true

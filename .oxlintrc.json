@@ -1,0 +1,84 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "jsPlugins": ["@shadcn/lint"],
+  "plugins": ["import", "jsx-a11y", "oxc", "promise", "react", "typescript", "unicorn", "vitest"],
+  "env": {
+    "browser": true,
+    "es2024": true
+  },
+  "categories": {
+    "correctness": "error",
+    "perf": "warn",
+    "suspicious": "warn"
+  },
+  "rules": {
+    "eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_"
+      }
+    ],
+    "typescript/consistent-type-imports": [
+      "error",
+      {
+        "prefer": "type-imports",
+        "fixStyle": "separate-type-imports"
+      }
+    ],
+    "typescript/no-explicit-any": "error",
+    "react/rules-of-hooks": "error",
+    "react/exhaustive-deps": "warn",
+    "react/only-export-components": [
+      "warn",
+      {
+        "allowConstantExport": true
+      }
+    ],
+    "react/jsx-key": "error",
+    "react/no-array-index-key": "warn",
+    "react/react-in-jsx-scope": "off",
+    "import/no-unassigned-import": "off",
+    "unicorn/prefer-node-protocol": "error",
+    "shadcn/no-restyle": [
+      "error",
+      {
+        "allow": ["layout", "spacing"]
+      }
+    ],
+    "shadcn/no-raw-colors": "error",
+    "shadcn/no-unknown-classes": "error",
+    "shadcn/require-static-classes": "error",
+    "shadcn/no-arbitrary-values": "warn",
+    "jsx-a11y/prefer-tag-over-role": "off"
+  },
+  "overrides": [
+    {
+      "files": ["src/components/ui/**", "src/components/blocks/**"],
+      "rules": {
+        "shadcn/no-restyle": "off",
+        "shadcn/no-arbitrary-values": "off",
+        "shadcn/no-raw-colors": "off",
+        "shadcn/require-static-classes": "off",
+        "react/only-export-components": "off",
+        "react/no-array-index-key": "off",
+        "jsx-a11y/anchor-is-valid": "off",
+        "jsx-a11y/control-has-associated-label": "off",
+        "jsx-a11y/label-has-associated-control": "off"
+      }
+    },
+    {
+      "files": ["src/routes/**"],
+      "rules": {
+        "react/only-export-components": "off"
+      }
+    },
+    {
+      "files": ["vite.config.ts"],
+      "env": {
+        "node": true
+      }
+    }
+  ],
+  "ignorePatterns": ["dist/**", "src/route-tree.gen.ts"]
+}

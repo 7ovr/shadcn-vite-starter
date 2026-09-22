@@ -1,0 +1,15 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "endOfLine": "lf",
+  "semi": false,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "printWidth": 100,
+  "sortPackageJson": false,
+  "sortTailwindcss": {
+    "stylesheet": "src/index.css",
+    "functions": ["cn", "cva"]
+  },
+  "ignorePatterns": ["dist/", "coverage/", "pnpm-lock.yaml", "src/route-tree.gen.ts"]
+}

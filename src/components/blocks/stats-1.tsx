@@ -1,12 +1,12 @@
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import { ArrowUp } from "lucide-react"
+import { Badge } from '@/components/ui/badge'
+import { Separator } from '@/components/ui/separator'
+import { ArrowUp } from 'lucide-react'
 
 const stats = [
-  { value: "12k+", label: "Active customers", delta: "+18%" },
-  { value: "99.9%", label: "Uptime guarantee", delta: "+0.1%" },
-  { value: "4.9/5", label: "Average rating", delta: "+0.3" },
-  { value: "150+", label: "Countries served", delta: "+12" },
+  { value: '12k+', label: 'Active customers', delta: '+18%' },
+  { value: '99.9%', label: 'Uptime guarantee', delta: '+0.1%' },
+  { value: '4.9/5', label: 'Average rating', delta: '+0.3' },
+  { value: '150+', label: 'Countries served', delta: '+12' },
 ]
 
 export default function StatsBlock() {
@@ -17,9 +17,7 @@ export default function StatsBlock() {
           <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl">
             Trusted at scale
           </h2>
-          <p className="mt-3 text-muted-foreground">
-            The numbers product teams rely on every day.
-          </p>
+          <p className="mt-3 text-muted-foreground">The numbers product teams rely on every day.</p>
         </div>
 
         <Separator className="mt-12" />
@@ -29,9 +27,7 @@ export default function StatsBlock() {
               key={label}
               className="flex flex-col items-center border-border px-6 py-8 text-center md:[&:nth-child(2)]:border-r [&:nth-child(odd)]:border-r"
             >
-              <dt className="text-4xl font-bold tracking-tight sm:text-5xl">
-                {value}
-              </dt>
+              <dt className="text-4xl font-bold tracking-tight sm:text-5xl">{value}</dt>
               <dd className="mt-2 text-sm text-muted-foreground">{label}</dd>
               <Badge variant="secondary" className="mt-2">
                 <ArrowUp data-icon="inline-start" aria-hidden="true" />

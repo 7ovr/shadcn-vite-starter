@@ -1,12 +1,12 @@
-import { Link } from "@tanstack/react-router"
+import { Link } from '@tanstack/react-router'
 
-import { ThemeToggle } from "@/components/theme-toggle"
-import { buttonVariants } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
+import { ThemeToggle } from '@/components/theme-toggle'
+import { buttonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
 const NAV = [
-  { to: "/", label: "Home" },
-  { to: "/waitlist", label: "Waitlist" },
+  { to: '/', label: 'Home' },
+  { to: '/waitlist', label: 'Waitlist' },
 ] as const
 
 export function SiteHeader() {
@@ -24,10 +24,10 @@ export function SiteHeader() {
               key={item.to}
               to={item.to}
               activeOptions={{ exact: true }}
-              activeProps={{ "aria-current": "page" }}
+              activeProps={{ 'aria-current': 'page' }}
               className={cn(
-                buttonVariants({ variant: "ghost", size: "sm" }),
-                "text-muted-foreground aria-[current=page]:bg-muted aria-[current=page]:text-foreground"
+                buttonVariants({ variant: 'ghost', size: 'sm' }),
+                'text-muted-foreground aria-[current=page]:bg-muted aria-[current=page]:text-foreground',
               )}
             >
               {item.label}

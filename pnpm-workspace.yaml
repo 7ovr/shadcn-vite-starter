@@ -1,7 +1,5 @@
 packages: []
 
 allowBuilds:
-  esbuild: true
-  msw: false
   # Hooks install through the prepare script instead.
   lefthook: false

@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button"
-import { ArrowRight } from "lucide-react"
+import { Button } from '@/components/ui/button'
+import { ArrowRight } from 'lucide-react'
 
 export default function CtaBlock() {
   return (
@@ -9,16 +9,12 @@ export default function CtaBlock() {
           Start building faster today.
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-base text-muted-foreground">
-          Ship production-ready interfaces in minutes with composable blocks,
-          sensible defaults, and zero configuration.
+          Ship production-ready interfaces in minutes with composable blocks, sensible defaults, and
+          zero configuration.
         </p>
 
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <Button
-            render={<a href="#" />}
-            nativeButton={false}
-            className="w-full sm:w-auto"
-          >
+          <Button render={<a href="#" />} nativeButton={false} className="w-full sm:w-auto">
             Get Started
             <ArrowRight data-icon="inline-end" aria-hidden="true" />
           </Button>
@@ -32,9 +28,7 @@ export default function CtaBlock() {
           </Button>
         </div>
 
-        <p className="mt-6 text-xs text-muted-foreground">
-          No credit card required.
-        </p>
+        <p className="mt-6 text-xs text-muted-foreground">No credit card required.</p>
       </div>
     </section>
   )

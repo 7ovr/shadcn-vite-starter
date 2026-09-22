@@ -1,7 +1,7 @@
-import type { QueryClient } from "@tanstack/react-query"
-import { createRouter, type RouterHistory } from "@tanstack/react-router"
+import type { QueryClient } from '@tanstack/react-query'
+import { createRouter, type RouterHistory } from '@tanstack/react-router'
 
-import { routeTree } from "./routeTree.gen"
+import { routeTree } from '@/route-tree.gen'
 
 export function createAppRouter({
   queryClient,
@@ -14,14 +14,14 @@ export function createAppRouter({
     routeTree,
     context: { queryClient },
     history,
-    defaultPreload: "intent",
+    defaultPreload: 'intent',
     // Loaders always run on preload; Query decides whether the cached data is still fresh.
     defaultPreloadStaleTime: 0,
     scrollRestoration: true,
   })
 }
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface Register {
     router: ReturnType<typeof createAppRouter>
   }

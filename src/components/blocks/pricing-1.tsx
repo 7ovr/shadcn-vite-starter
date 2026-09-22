@@ -1,6 +1,6 @@
-import * as React from "react"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import * as React from 'react'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardAction,
@@ -9,54 +9,44 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { cn } from "@/lib/utils"
-import { Check } from "lucide-react"
+} from '@/components/ui/card'
+import { cn } from '@/lib/utils'
+import { Check } from 'lucide-react'
 
 const tiers = [
   {
-    name: "Starter",
+    name: 'Starter',
     monthly: 0,
     annual: 0,
-    description: "For side projects and getting started.",
-    features: ["Up to 3 projects", "Community support", "1 GB storage"],
-    cta: "Get Started",
+    description: 'For side projects and getting started.',
+    features: ['Up to 3 projects', 'Community support', '1 GB storage'],
+    cta: 'Get Started',
     featured: false,
   },
   {
-    name: "Pro",
+    name: 'Pro',
     monthly: 29,
     annual: 23,
-    description: "For growing teams that ship every day.",
-    features: [
-      "Unlimited projects",
-      "Priority support",
-      "50 GB storage",
-      "Advanced analytics",
-    ],
-    cta: "Start Free Trial",
+    description: 'For growing teams that ship every day.',
+    features: ['Unlimited projects', 'Priority support', '50 GB storage', 'Advanced analytics'],
+    cta: 'Start Free Trial',
     featured: true,
   },
   {
-    name: "Enterprise",
+    name: 'Enterprise',
     monthly: 99,
     annual: 79,
-    description: "For organizations with advanced needs.",
-    features: [
-      "Everything In Pro",
-      "Dedicated support",
-      "Unlimited storage",
-      "SSO and audit logs",
-    ],
-    cta: "Contact Sales",
+    description: 'For organizations with advanced needs.',
+    features: ['Everything In Pro', 'Dedicated support', 'Unlimited storage', 'SSO and audit logs'],
+    cta: 'Contact Sales',
     featured: false,
   },
 ]
 
-type Billing = "monthly" | "annual"
+type Billing = 'monthly' | 'annual'
 
 export default function PricingBlock() {
-  const [billing, setBilling] = React.useState<Billing>("monthly")
+  const [billing, setBilling] = React.useState<Billing>('monthly')
 
   return (
     <section className="flex w-full items-center justify-center bg-background px-6 py-16 text-foreground">
@@ -78,26 +68,26 @@ export default function PricingBlock() {
           >
             <button
               type="button"
-              onClick={() => setBilling("monthly")}
-              aria-pressed={billing === "monthly"}
+              onClick={() => setBilling('monthly')}
+              aria-pressed={billing === 'monthly'}
               className={cn(
-                "px-4 py-1.5 text-sm font-medium transition-colors",
-                billing === "monthly"
-                  ? "bg-background text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
+                'px-4 py-1.5 text-sm font-medium transition-colors',
+                billing === 'monthly'
+                  ? 'bg-background text-foreground shadow-sm'
+                  : 'text-muted-foreground hover:text-foreground',
               )}
             >
               Monthly
             </button>
             <button
               type="button"
-              onClick={() => setBilling("annual")}
-              aria-pressed={billing === "annual"}
+              onClick={() => setBilling('annual')}
+              aria-pressed={billing === 'annual'}
               className={cn(
-                "flex items-center gap-2 px-4 py-1.5 text-sm font-medium transition-colors",
-                billing === "annual"
-                  ? "bg-background text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
+                'flex items-center gap-2 px-4 py-1.5 text-sm font-medium transition-colors',
+                billing === 'annual'
+                  ? 'bg-background text-foreground shadow-sm'
+                  : 'text-muted-foreground hover:text-foreground',
               )}
             >
               Annual
@@ -110,12 +100,10 @@ export default function PricingBlock() {
           {tiers.map((tier) => (
             <Card
               key={tier.name}
-              className={cn(tier.featured && "bg-muted/30 ring-2 ring-primary")}
+              className={cn(tier.featured && 'bg-muted/30 ring-2 ring-primary')}
             >
               <CardHeader>
-                <CardTitle className="text-base font-semibold">
-                  {tier.name}
-                </CardTitle>
+                <CardTitle className="text-base font-semibold">{tier.name}</CardTitle>
                 {tier.featured && (
                   <CardAction>
                     <Badge>Most Popular</Badge>
@@ -128,17 +116,14 @@ export default function PricingBlock() {
               <CardContent className="flex flex-1 flex-col gap-6">
                 <p className="flex items-baseline gap-1">
                   <span className="text-4xl font-bold tracking-tight text-foreground">
-                    ${billing === "annual" ? tier.annual : tier.monthly}
+                    ${billing === 'annual' ? tier.annual : tier.monthly}
                   </span>
                   <span className="text-sm text-muted-foreground">/Month</span>
                 </p>
                 <ul className="flex flex-1 flex-col gap-3 text-sm text-foreground">
                   {tier.features.map((feature) => (
                     <li key={feature} className="flex items-center gap-2">
-                      <Check
-                        className="size-4 shrink-0 text-primary"
-                        aria-hidden="true"
-                      />
+                      <Check className="size-4 shrink-0 text-primary" aria-hidden="true" />
                       {feature}
                     </li>
                   ))}
@@ -147,7 +132,7 @@ export default function PricingBlock() {
               <CardFooter>
                 <Button
                   nativeButton={false}
-                  variant={tier.featured ? "default" : "outline"}
+                  variant={tier.featured ? 'default' : 'outline'}
                   size="lg"
                   className="w-full"
                   render={<a href="#" />}

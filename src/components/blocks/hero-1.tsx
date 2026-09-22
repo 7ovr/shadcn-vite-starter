@@ -1,9 +1,9 @@
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
-import { Sparkles, ArrowRight, ArrowUpRight } from "lucide-react"
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
+import { Sparkles, ArrowRight, ArrowUpRight } from 'lucide-react'
 
-const LOGOS = ["Northwind", "Vertex", "Lumina", "Cascade", "Quantel"]
+const LOGOS = ['Northwind', 'Vertex', 'Lumina', 'Cascade', 'Quantel']
 
 export default function HeroBlock() {
   return (
@@ -19,8 +19,8 @@ export default function HeroBlock() {
         </h1>
 
         <p className="mt-5 max-w-2xl text-lg text-muted-foreground">
-          The all-in-one platform to design, build, and ship your ideas, with
-          everything your team needs in one place.
+          The all-in-one platform to design, build, and ship your ideas, with everything your team
+          needs in one place.
         </p>
 
         <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row">
@@ -28,11 +28,7 @@ export default function HeroBlock() {
             Get Started
             <ArrowRight data-icon="inline-end" aria-hidden="true" />
           </Button>
-          <Button
-            variant="outline"
-            render={<a href="#" />}
-            nativeButton={false}
-          >
+          <Button variant="outline" render={<a href="#" />} nativeButton={false}>
             Learn More
             <ArrowUpRight data-icon="inline-end" aria-hidden="true" />
           </Button>
