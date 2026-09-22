@@ -1,21 +1,12 @@
-import { createFileRoute } from "@tanstack/react-router"
+import { createFileRoute } from '@tanstack/react-router'
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { waitlistQueryOptions } from "@/features/waitlist/queries"
-import { WaitlistForm } from "@/features/waitlist/waitlist-form"
-import { WaitlistList } from "@/features/waitlist/waitlist-list"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { waitlistQueryOptions } from '@/features/waitlist/queries'
+import { WaitlistForm } from '@/features/waitlist/waitlist-form'
+import { WaitlistTable } from '@/features/waitlist/waitlist-table'
 
-// Router, Query and Form together: the loader fills the cache before the page
-// renders, the form validates with Zod, and the mutation refreshes the list.
-export const Route = createFileRoute("/waitlist")({
-  loader: ({ context }) =>
-    context.queryClient.ensureQueryData(waitlistQueryOptions),
+export const Route = createFileRoute('/waitlist')({
+  loader: ({ context }) => context.queryClient.ensureQueryData(waitlistQueryOptions),
   component: WaitlistPage,
 })
 
@@ -23,12 +14,10 @@ function WaitlistPage() {
   return (
     <main className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-4 py-16">
       <div className="flex flex-col gap-2">
-        <h1 className="font-heading text-3xl font-bold tracking-tight">
-          Waitlist
-        </h1>
+        <h1 className="font-heading text-3xl font-bold tracking-tight">Waitlist</h1>
         <p className="text-muted-foreground">
-          A working example of TanStack Router, Query and Form together. Replace
-          it with your own feature.
+          A working example of TanStack Router, Query, Form and Table together. Replace it with your
+          own feature.
         </p>
       </div>
 
@@ -37,8 +26,7 @@ function WaitlistPage() {
           <CardHeader>
             <CardTitle>Join The Waitlist</CardTitle>
             <CardDescription>
-              A TanStack Form validated with Zod, submitted through a Query
-              mutation.
+              A TanStack Form validated with Zod, submitted through a Query mutation.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -50,11 +38,11 @@ function WaitlistPage() {
           <CardHeader>
             <CardTitle>On The List</CardTitle>
             <CardDescription>
-              Loaded by the route loader and refreshed after each signup.
+              A sortable TanStack Table, loaded by the route loader and refreshed after each signup.
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <WaitlistList />
+            <WaitlistTable />
           </CardContent>
         </Card>
       </div>

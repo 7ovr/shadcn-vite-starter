@@ -1,22 +1,17 @@
-import { useForm } from "@tanstack/react-form"
+import { useForm } from '@tanstack/react-form'
 
-import { Button } from "@/components/ui/button"
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
+import { Button } from '@/components/ui/button'
+import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
+import { Input } from '@/components/ui/input'
 
-import { useJoinWaitlist } from "./queries"
-import { waitlistSchema } from "./schema"
+import { useJoinWaitlist } from '@/features/waitlist/queries'
+import { waitlistSchema } from '@/features/waitlist/schema'
 
 export function WaitlistForm() {
   const joinWaitlist = useJoinWaitlist()
 
   const form = useForm({
-    defaultValues: { name: "", email: "" },
+    defaultValues: { name: '', email: '' },
     validators: { onSubmit: waitlistSchema },
     onSubmit: async ({ value, formApi }) => {
       try {
@@ -80,14 +75,12 @@ export function WaitlistForm() {
           }}
         </form.Field>
 
-        {joinWaitlist.error ? (
-          <FieldError>{joinWaitlist.error.message}</FieldError>
-        ) : null}
+        {joinWaitlist.error ? <FieldError>{joinWaitlist.error.message}</FieldError> : null}
 
         <form.Subscribe selector={(state) => state.isSubmitting}>
           {(isSubmitting) => (
             <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Joining..." : "Join The Waitlist"}
+              {isSubmitting ? 'Joining...' : 'Join The Waitlist'}
             </Button>
           )}
         </form.Subscribe>

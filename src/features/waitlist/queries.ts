@@ -1,13 +1,9 @@
-import {
-  queryOptions,
-  useMutation,
-  useQueryClient,
-} from "@tanstack/react-query"
+import { queryOptions, useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { fetchWaitlist, joinWaitlist } from "./api"
+import { fetchWaitlist, joinWaitlist } from '@/features/waitlist/api'
 
 export const waitlistQueryOptions = queryOptions({
-  queryKey: ["waitlist"],
+  queryKey: ['waitlist'],
   queryFn: fetchWaitlist,
 })
 
