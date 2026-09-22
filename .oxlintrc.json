@@ -81,6 +81,7 @@
     "dist/**",
     "src/route-tree.gen.ts",
     "src/components/ui/**",
-    ".claude/skills/**"
+    ".claude/skills/**",
+    ".agents/skills/**"
   ]
 }

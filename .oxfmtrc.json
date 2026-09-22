@@ -17,6 +17,7 @@
     "pnpm-lock.yaml",
     "src/route-tree.gen.ts",
     ".claude/skills/",
-    "skills-lock.json"
+    "skills-lock.json",
+    ".agents/skills/"
   ]
 }
