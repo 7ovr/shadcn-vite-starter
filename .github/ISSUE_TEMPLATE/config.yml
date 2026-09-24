@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report A Security Problem
+    url: https://github.com/7ovr/shadcn-vite-starter/security/advisories/new
+    about: Please report vulnerabilities privately, not in a public issue.
+  - name: Browse 7Ovr Blocks And Templates
+    url: https://7ovr.com/blocks
+    about: Free and Pro blocks that install into this starter with one command.

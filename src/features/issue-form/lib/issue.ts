@@ -2,10 +2,11 @@ import { z } from 'zod'
 
 import { REPOSITORY_URL } from '@/lib/config'
 
+// Each type opens its issue form in .github/ISSUE_TEMPLATE, which adds the matching label.
 export const ISSUE_TYPES = [
-  { value: 'bug', label: 'Bug Report' },
-  { value: 'feature', label: 'Feature Request' },
-  { value: 'block', label: 'Block Request' },
+  { value: 'bug', label: 'Bug Report', template: 'bug-report.yml' },
+  { value: 'feature', label: 'Feature Request', template: 'feature-request.yml' },
+  { value: 'block', label: 'Block Request', template: 'block-request.yml' },
 ] as const
 
 export type IssueType = (typeof ISSUE_TYPES)[number]['value']
@@ -32,12 +33,13 @@ export const issueSchema = z.object({
 
 export type Issue = z.infer<typeof issueSchema>
 
-// GitHub fills the new-issue form from the query string, so nothing is sent until the user posts it.
+// GitHub prefills the form's fields by id from the query string; nothing is sent until posted.
 export function issueUrl(issue: Issue) {
-  const label = ISSUE_TYPES.find((type) => type.value === issue.type)?.label ?? 'Issue'
+  const type = ISSUE_TYPES.find((entry) => entry.value === issue.type) ?? ISSUE_TYPES[0]
   const params = new URLSearchParams({
-    title: `[${label}] ${issue.title.trim()}`,
-    body: issue.details.trim(),
+    template: type.template,
+    title: `[${type.label}] ${issue.title.trim()}`,
+    details: issue.details.trim(),
   })
   return `${REPOSITORY_URL}/issues/new?${params}`
 }

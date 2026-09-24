@@ -81,6 +81,7 @@ describe('IssueForm', () => {
     expect(open).toHaveBeenCalledOnce()
     const url = new URL(String(open.mock.calls[0]?.[0]))
     expect(url.searchParams.get('title')).toBe('[Block Request] Add a pricing block example')
+    expect(url.searchParams.get('template')).toBe('block-request.yml')
     expect(open.mock.calls[0]?.[1]).toBe('_blank')
   })
 })

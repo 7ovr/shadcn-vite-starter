@@ -1,10 +1,10 @@
 # Contributing
 
-Thanks for helping improve the 7Ovr Starter. Bug reports, ideas and pull requests are all welcome.
+Thanks for helping improve the 7Ovr Starter. Bug reports, ideas and pull requests are all welcome. Everyone taking part follows the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Before you start
 
-- **Found a bug or have an idea?** [Open an issue](https://github.com/7ovr/shadcn-vite-starter/issues/new) first, or use **Report An Issue** in the running app, which prefills one for you. Search the existing issues before opening a new one.
+- **Found a bug or have an idea?** [Open an issue](https://github.com/7ovr/shadcn-vite-starter/issues/new/choose) first, as a Bug Report, Feature Request or Block Request, or use **Report An Issue** in the running app, which prefills one for you. Search the existing issues before opening a new one.
 - **Planning a larger change?** Open an issue to discuss it before writing code, so your time is not spent on something that will not be merged.
 - **Found a security problem?** Do not open a public issue. Follow [SECURITY.md](SECURITY.md) instead.
 

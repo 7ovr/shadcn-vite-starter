@@ -1,0 +1,31 @@
+name: Bug Report
+description: Something in the starter does not work as it should.
+title: '[Bug Report] '
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for reporting a bug. Please search the existing issues first, in case it is already known.
+  - type: textarea
+    id: details
+    attributes:
+      label: What Happened
+      description: What went wrong, and what did you expect instead?
+      placeholder: With the sidebar collapsed, the Search tooltip covers the page title.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps To Reproduce
+      description: The shortest way to see the bug, starting from a fresh clone.
+      placeholder: |
+        1. Run pnpm dev
+        2. Collapse the sidebar
+        3. Hover the search icon
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, operating system, and Node and pnpm versions if it happens in the tooling.
+      placeholder: Chrome 140 on Windows 11, Node 24.2, pnpm 12.5
