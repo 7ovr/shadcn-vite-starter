@@ -81,6 +81,16 @@ describe('AppShell', () => {
       expect(router.state.location.pathname).toBe('/agentic-coding')
     })
 
+    it('opens with Caps Lock on', async () => {
+      const user = userEvent.setup()
+      await renderRoute('/')
+      await screen.findByRole('heading', { level: 1 })
+
+      await user.keyboard('{Control>}K{/Control}')
+
+      expect(await screen.findByRole('dialog')).toBeInTheDocument()
+    })
+
     it('stays open while Ctrl+K is held down', async () => {
       const user = userEvent.setup()
       await renderRoute('/')

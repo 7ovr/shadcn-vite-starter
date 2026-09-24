@@ -32,10 +32,10 @@ describe('CopyButton', () => {
     const user = setup({ advanceTimers: (ms) => vi.advanceTimersByTime(ms) })
     await user.click(copyButton())
     await screen.findByRole('button', { name: 'Copied' })
+    // Flush the effect that starts the reset timer before moving the clock past it.
+    await act(async () => {})
 
-    act(() => {
-      vi.advanceTimersByTime(2000)
-    })
+    await act(() => vi.advanceTimersByTimeAsync(2000))
 
     expect(copyButton()).toBeInTheDocument()
     expect(screen.getByRole('status')).toBeEmptyDOMElement()

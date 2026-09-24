@@ -114,7 +114,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     function onKeyDown(event: KeyboardEvent) {
       // A held key repeats keydown, which would flip the menu open and shut.
       if (event.repeat) return
-      if (event.key === 'k' && (event.metaKey || event.ctrlKey)) {
+      if (event.key.toLowerCase() === 'k' && (event.metaKey || event.ctrlKey)) {
         event.preventDefault()
         setCommandOpen((open) => !open)
       }
