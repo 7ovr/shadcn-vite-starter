@@ -1,11 +1,8 @@
 import { QueryClient } from '@tanstack/react-query'
 
-export function createQueryClient() {
-  return new QueryClient({
-    defaultOptions: {
-      queries: { staleTime: 60_000 },
-    },
-  })
-}
-
-export const queryClient = createQueryClient()
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    // One retry covers a dropped request without making a real outage wait through several.
+    queries: { staleTime: 60_000, retry: 1 },
+  },
+})

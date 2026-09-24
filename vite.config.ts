@@ -1,5 +1,6 @@
 /// <reference types="vitest/config" />
 import path from 'node:path'
+
 import tailwindcss from '@tailwindcss/vite'
 import { tanstackRouter } from '@tanstack/router-plugin/vite'
 import react from '@vitejs/plugin-react'
@@ -17,7 +18,7 @@ export default defineConfig({
     tailwindcss(),
   ],
   server: {
-    // With VITE_API_URL=/api, development requests go to your backend on port 8080.
+    // Development requests to /api go to your backend on port 8080.
     proxy: { '/api': { target: 'http://localhost:8080', changeOrigin: true } },
   },
   resolve: {
@@ -29,6 +30,5 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/integrations/test-setup.ts'],
     css: false,
-    testTimeout: 30_000,
   },
 })

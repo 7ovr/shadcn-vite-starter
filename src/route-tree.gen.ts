@@ -9,140 +9,104 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as appAppRouteImport } from './routes/(app)/_app'
-import { Route as marketingMarketingRouteImport } from './routes/(marketing)/_marketing'
-import { Route as marketingMarketingIndexRouteImport } from './routes/(marketing)/_marketing/index'
-import { Route as appAppPokemonIndexRouteImport } from './routes/(app)/_app/pokemon/index'
-import { Route as appAppPokemonNameRouteImport } from './routes/(app)/_app/pokemon/$name'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as AgenticCodingRouteImport } from './routes/agentic-coding'
+import { Route as GetStartedRouteImport } from './routes/get-started'
+import { Route as TechStackRouteImport } from './routes/tech-stack'
 
-const appAppRoute = appAppRouteImport.update({
-  id: '/(app)/_app',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const marketingMarketingRoute = marketingMarketingRouteImport.update({
-  id: '/(marketing)/_marketing',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const marketingMarketingIndexRoute = marketingMarketingIndexRouteImport.update({
+const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => marketingMarketingRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-const appAppPokemonIndexRoute = appAppPokemonIndexRouteImport.update({
-  id: '/pokemon/',
-  path: '/pokemon/',
-  getParentRoute: () => appAppRoute,
+const AgenticCodingRoute = AgenticCodingRouteImport.update({
+  id: '/agentic-coding',
+  path: '/agentic-coding',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const appAppPokemonNameRoute = appAppPokemonNameRouteImport.update({
-  id: '/pokemon/$name',
-  path: '/pokemon/$name',
-  getParentRoute: () => appAppRoute,
+const GetStartedRoute = GetStartedRouteImport.update({
+  id: '/get-started',
+  path: '/get-started',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TechStackRoute = TechStackRouteImport.update({
+  id: '/tech-stack',
+  path: '/tech-stack',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof marketingMarketingIndexRoute
-  '/pokemon/$name': typeof appAppPokemonNameRoute
-  '/pokemon/': typeof appAppPokemonIndexRoute
+  '/': typeof IndexRoute
+  '/agentic-coding': typeof AgenticCodingRoute
+  '/get-started': typeof GetStartedRoute
+  '/tech-stack': typeof TechStackRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof marketingMarketingIndexRoute
-  '/pokemon/$name': typeof appAppPokemonNameRoute
-  '/pokemon': typeof appAppPokemonIndexRoute
+  '/': typeof IndexRoute
+  '/agentic-coding': typeof AgenticCodingRoute
+  '/get-started': typeof GetStartedRoute
+  '/tech-stack': typeof TechStackRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/(app)/_app': typeof appAppRouteWithChildren
-  '/(marketing)/_marketing': typeof marketingMarketingRouteWithChildren
-  '/(marketing)/_marketing/': typeof marketingMarketingIndexRoute
-  '/(app)/_app/pokemon/$name': typeof appAppPokemonNameRoute
-  '/(app)/_app/pokemon/': typeof appAppPokemonIndexRoute
+  '/': typeof IndexRoute
+  '/agentic-coding': typeof AgenticCodingRoute
+  '/get-started': typeof GetStartedRoute
+  '/tech-stack': typeof TechStackRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/pokemon/$name' | '/pokemon/'
+  fullPaths: '/' | '/agentic-coding' | '/get-started' | '/tech-stack'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/pokemon/$name' | '/pokemon'
-  id:
-    | '__root__'
-    | '/(app)/_app'
-    | '/(marketing)/_marketing'
-    | '/(marketing)/_marketing/'
-    | '/(app)/_app/pokemon/$name'
-    | '/(app)/_app/pokemon/'
+  to: '/' | '/agentic-coding' | '/get-started' | '/tech-stack'
+  id: '__root__' | '/' | '/agentic-coding' | '/get-started' | '/tech-stack'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  appAppRoute: typeof appAppRouteWithChildren
-  marketingMarketingRoute: typeof marketingMarketingRouteWithChildren
+  IndexRoute: typeof IndexRoute
+  AgenticCodingRoute: typeof AgenticCodingRoute
+  GetStartedRoute: typeof GetStartedRoute
+  TechStackRoute: typeof TechStackRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/(app)/_app': {
-      id: '/(app)/_app'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof appAppRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(marketing)/_marketing': {
-      id: '/(marketing)/_marketing'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof marketingMarketingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(marketing)/_marketing/': {
-      id: '/(marketing)/_marketing/'
+    '/': {
+      id: '/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof marketingMarketingIndexRouteImport
-      parentRoute: typeof marketingMarketingRoute
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/(app)/_app/pokemon/': {
-      id: '/(app)/_app/pokemon/'
-      path: '/pokemon'
-      fullPath: '/pokemon/'
-      preLoaderRoute: typeof appAppPokemonIndexRouteImport
-      parentRoute: typeof appAppRoute
+    '/agentic-coding': {
+      id: '/agentic-coding'
+      path: '/agentic-coding'
+      fullPath: '/agentic-coding'
+      preLoaderRoute: typeof AgenticCodingRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/(app)/_app/pokemon/$name': {
-      id: '/(app)/_app/pokemon/$name'
-      path: '/pokemon/$name'
-      fullPath: '/pokemon/$name'
-      preLoaderRoute: typeof appAppPokemonNameRouteImport
-      parentRoute: typeof appAppRoute
+    '/get-started': {
+      id: '/get-started'
+      path: '/get-started'
+      fullPath: '/get-started'
+      preLoaderRoute: typeof GetStartedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tech-stack': {
+      id: '/tech-stack'
+      path: '/tech-stack'
+      fullPath: '/tech-stack'
+      preLoaderRoute: typeof TechStackRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface appAppRouteChildren {
-  appAppPokemonNameRoute: typeof appAppPokemonNameRoute
-  appAppPokemonIndexRoute: typeof appAppPokemonIndexRoute
-}
-
-const appAppRouteChildren: appAppRouteChildren = {
-  appAppPokemonNameRoute: appAppPokemonNameRoute,
-  appAppPokemonIndexRoute: appAppPokemonIndexRoute,
-}
-
-const appAppRouteWithChildren =
-  appAppRoute._addFileChildren(appAppRouteChildren)
-
-interface marketingMarketingRouteChildren {
-  marketingMarketingIndexRoute: typeof marketingMarketingIndexRoute
-}
-
-const marketingMarketingRouteChildren: marketingMarketingRouteChildren = {
-  marketingMarketingIndexRoute: marketingMarketingIndexRoute,
-}
-
-const marketingMarketingRouteWithChildren =
-  marketingMarketingRoute._addFileChildren(marketingMarketingRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
-  appAppRoute: appAppRouteWithChildren,
-  marketingMarketingRoute: marketingMarketingRouteWithChildren,
+  IndexRoute: IndexRoute,
+  AgenticCodingRoute: AgenticCodingRoute,
+  GetStartedRoute: GetStartedRoute,
+  TechStackRoute: TechStackRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

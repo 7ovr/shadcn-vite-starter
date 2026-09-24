@@ -1,24 +1,33 @@
-import { z } from 'zod'
+// zod/mini keeps this schema small: it is part of the route config, which loads with every page.
+import { catch as withFallback, gte, int, literal, object, optional } from 'zod/mini'
 
-export type PokemonSummary = {
+export type Pokemon = {
   id: number
   name: string
-}
-
-export type Pokemon = PokemonSummary & {
-  heightCm: number
-  weightKg: number
   types: string[]
-  imageUrl: string | null
+  // Hidden abilities are left out to keep the column short.
+  abilities: string[]
+  baseStatTotal: number
+  spriteUrl: string | null
 }
 
-// Names and Pokedex numbers as PokeAPI accepts them in a URL.
-export const POKEMON_SLUG = /^[a-z0-9-]+$/i
+export type PokemonPage = {
+  total: number
+  pokemon: Pokemon[]
+}
 
-export const pokemonSearchSchema = z.object({
-  query: z
-    .string()
-    .trim()
-    .min(1, 'Enter a name or number.')
-    .regex(/^[a-zA-Z0-9-]*$/, 'Use letters, numbers and hyphens only.'),
+export const PAGE_SIZES = [10, 15, 20] as const
+
+export type PageSize = (typeof PAGE_SIZES)[number]
+
+export const DEFAULT_PAGE_SIZE: PageSize = 10
+
+export function isPageSize(value: unknown): value is PageSize {
+  return PAGE_SIZES.some((size) => size === value)
+}
+
+// A missing or broken value falls back to the default instead of an error.
+export const pokemonSearchSchema = object({
+  page: withFallback(optional(int().check(gte(1))), undefined),
+  size: withFallback(optional(literal(PAGE_SIZES)), undefined),
 })

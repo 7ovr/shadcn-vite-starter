@@ -2,121 +2,75 @@ import { screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
+import { installFakePokeApi } from '@/features/pokemon/api/fake-poke-api'
 import { http } from '@/integrations/axios'
-import { renderRoute } from '@/lib/test-utils'
+import { bodyRows, renderRoute } from '@/lib/test-utils'
 
-async function setup() {
-  const user = userEvent.setup()
-  await renderRoute('/pokemon')
-  const table = await screen.findByRole('table', { name: 'Pokémon' })
-  return { user, table }
-}
+const pokemonTable = () => screen.getByRole('table', { name: 'Pokémon' })
 
-function firstColumn(table: HTMLElement) {
-  const [, ...rows] = within(table).getAllByRole('row')
-  return rows.map((row) => within(row).getAllByRole('cell')[1]?.textContent)
-}
+describe('PokemonTable', () => {
+  it('shows the first ten Pokémon with their types, abilities and base stats', async () => {
+    await renderRoute('/')
 
-describe('pokemon table', () => {
-  it('renders a column header per field', async () => {
-    const { table } = await setup()
-
-    expect(
-      within(table)
-        .getAllByRole('columnheader')
-        .map((th) => th.textContent),
-    ).toEqual(['No.', 'Name'])
+    expect(await within(pokemonTable()).findByText('Bulbasaur')).toBeInTheDocument()
+    const rows = bodyRows(pokemonTable())
+    expect(rows).toHaveLength(10)
+    expect(within(rows[0]!).getByText('Grass')).toBeInTheDocument()
+    expect(within(rows[0]!).getByText('Poison')).toBeInTheDocument()
+    expect(within(rows[0]!).getByText('Overgrow')).toBeInTheDocument()
+    expect(within(rows[0]!).queryByText(/Chlorophyll/)).not.toBeInTheDocument()
+    expect(within(rows[0]!).getByText('318')).toBeInTheDocument()
+    expect(screen.getByText('30')).toBeInTheDocument()
   })
 
-  it('shows ten Pokemon per page in Pokedex order', async () => {
-    const { table } = await setup()
-
-    expect(firstColumn(table)).toHaveLength(10)
-    expect(firstColumn(table)[0]).toBe('Bulbasaur')
-    expect(within(table).getByText('#001')).toBeInTheDocument()
-    expect(screen.getByText('Page 1 of 16')).toBeInTheDocument()
-  })
-
-  it('pages forwards and back', async () => {
-    const { user, table } = await setup()
-    const previous = screen.getByRole('button', { name: 'Previous' })
-    expect(previous).toBeDisabled()
-
-    await user.click(screen.getByRole('button', { name: 'Next' }))
-    expect(firstColumn(table)[0]).toBe('Metapod')
-    expect(screen.getByText('Page 2 of 16')).toBeInTheDocument()
-
-    await user.click(previous)
-    expect(firstColumn(table)[0]).toBe('Bulbasaur')
-  })
-
-  it('sorts by number ascending on the first click', async () => {
-    const { user, table } = await setup()
-
-    await user.click(within(table).getByRole('button', { name: 'No.' }))
-
-    expect(firstColumn(table)[0]).toBe('Bulbasaur')
-    expect(within(table).getAllByRole('columnheader')[0]).toHaveAttribute('aria-sort', 'ascending')
-  })
-
-  it('sorts by name ascending, then descending', async () => {
-    const { user, table } = await setup()
-    const sortByName = within(table).getByRole('button', { name: 'Name' })
-
-    await user.click(sortByName)
-    expect(firstColumn(table)[0]).toBe('Abra')
-
-    await user.click(sortByName)
-    expect(firstColumn(table)[0]).toBe('Zubat')
-  })
-
-  it('reports the sort direction to assistive technology', async () => {
-    const { user, table } = await setup()
-    const [numberHeader, nameHeader] = within(table).getAllByRole('columnheader')
-
-    expect(nameHeader).toHaveAttribute('aria-sort', 'none')
-
-    await user.click(within(table).getByRole('button', { name: 'Name' }))
-    expect(nameHeader).toHaveAttribute('aria-sort', 'ascending')
-    expect(numberHeader).toHaveAttribute('aria-sort', 'none')
-
-    await user.click(within(table).getByRole('button', { name: 'Name' }))
-    expect(nameHeader).toHaveAttribute('aria-sort', 'descending')
-  })
-
-  it('shows the total in the caption', async () => {
-    const { table } = await setup()
-
-    expect(within(table).getByText('151 Pokémon in total.')).toBeInTheDocument()
-  })
-
-  it('links each name to its detail page', async () => {
-    const { user, table } = await setup()
-
-    await user.click(within(table).getByRole('link', { name: 'Bulbasaur' }))
-
-    expect(await screen.findByRole('heading', { level: 1, name: 'Bulbasaur' })).toBeInTheDocument()
-  })
-
-  it('shows an empty state when the list has no Pokémon', async () => {
-    vi.spyOn(http, 'get').mockResolvedValueOnce({ data: { results: [] } })
-    await renderRoute('/pokemon')
-
-    expect(await screen.findByText('No Pokémon Yet')).toBeInTheDocument()
-    expect(screen.queryByRole('table', { name: 'Pokémon' })).not.toBeInTheDocument()
-  })
-
-  it('contains a failed load to its section and recovers on retry', async () => {
-    vi.spyOn(http, 'get').mockRejectedValueOnce(new Error('Network Error'))
+  it('pages forwards and keeps the page in the URL', async () => {
     const user = userEvent.setup()
-    await renderRoute('/pokemon')
+    const { router } = await renderRoute('/')
+    await within(pokemonTable()).findByText('Bulbasaur')
+    expect(screen.getByRole('button', { name: 'Previous Page' })).toBeDisabled()
 
-    const alert = await screen.findByRole('alert')
-    expect(within(alert).getByText('Something Went Wrong')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Find Pokémon' })).toBeInTheDocument()
+    await user.click(screen.getByRole('link', { name: 'Next Page' }))
 
-    await user.click(within(alert).getByRole('button', { name: 'Try Again' }))
+    expect(await within(pokemonTable()).findByText('Metapod')).toBeInTheDocument()
+    expect(router.state.location.search).toEqual({ page: 2 })
+    expect(screen.getByRole('link', { name: 'Page 2' })).toHaveAttribute('aria-current', 'page')
+  })
 
-    expect(await screen.findByRole('table', { name: 'Pokémon' })).toBeInTheDocument()
+  it('goes back to the first page when the rows per page change', async () => {
+    const user = userEvent.setup()
+    const { router } = await renderRoute('/?page=3')
+    await within(pokemonTable()).findByText('Spearow')
+    expect(screen.getByRole('button', { name: 'Next Page' })).toBeDisabled()
+
+    await user.click(screen.getByRole('combobox', { name: 'Rows Per Page' }))
+    await user.click(await screen.findByRole('option', { name: '15' }))
+
+    expect(await within(pokemonTable()).findByText('Bulbasaur')).toBeInTheDocument()
+    expect(bodyRows(pokemonTable())).toHaveLength(15)
+    expect(router.state.location.search).toEqual({ size: 15 })
+  })
+
+  it('offers a way back from a page past the end', async () => {
+    const user = userEvent.setup()
+    const { router } = await renderRoute('/?page=99')
+
+    expect(await screen.findByText('There are only 3 pages.')).toBeInTheDocument()
+    await user.click(screen.getByRole('link', { name: 'Back To First Page' }))
+
+    expect(await within(pokemonTable()).findByText('Bulbasaur')).toBeInTheDocument()
+    expect(router.state.location.search).toEqual({})
+  })
+
+  it('shows an error with a retry when the request fails', async () => {
+    vi.mocked(http.get).mockRejectedValue(new Error('Network Error'))
+    const user = userEvent.setup()
+    await renderRoute('/')
+
+    expect(await screen.findByText('Something Went Wrong')).toBeInTheDocument()
+
+    installFakePokeApi()
+    await user.click(screen.getByRole('button', { name: 'Try Again' }))
+
+    expect(await within(pokemonTable()).findByText('Bulbasaur')).toBeInTheDocument()
   })
 })

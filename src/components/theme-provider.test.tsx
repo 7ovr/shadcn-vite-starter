@@ -3,13 +3,22 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
 import { ThemeProvider } from '@/components/theme-provider'
-import { ThemeToggle } from '@/components/theme-toggle'
+import { useTheme } from '@/hooks/use-theme'
 import { THEME_STORAGE_KEY } from '@/lib/theme'
 
-function renderToggle() {
+function ThemeProbe() {
+  const { resolvedTheme, toggleTheme } = useTheme()
+  return (
+    <button type="button" onClick={toggleTheme}>
+      {resolvedTheme}
+    </button>
+  )
+}
+
+function setup() {
   render(
     <ThemeProvider>
-      <ThemeToggle />
+      <ThemeProbe />
       <input aria-label="Notes" />
     </ThemeProvider>,
   )
@@ -18,17 +27,37 @@ function renderToggle() {
 
 const isDark = () => document.documentElement.classList.contains('dark')
 
-describe('theme provider', () => {
-  it('follows the system theme when nothing is saved', () => {
-    renderToggle()
+const mockSystemDark = () =>
+  vi.spyOn(window, 'matchMedia').mockImplementation(
+    (query: string) =>
+      ({
+        matches: query === '(prefers-color-scheme: dark)',
+        media: query,
+        addEventListener: () => {},
+        removeEventListener: () => {},
+      }) as unknown as MediaQueryList,
+  )
+
+describe('ThemeProvider', () => {
+  it('follows a light system theme when nothing is saved', () => {
+    setup()
 
     expect(isDark()).toBe(false)
+    expect(screen.getByRole('button')).toHaveTextContent('light')
   })
 
-  it('toggles with the button and remembers the choice', async () => {
-    const user = renderToggle()
+  it('follows a dark system theme when nothing is saved', () => {
+    mockSystemDark()
+    setup()
 
-    await user.click(screen.getByRole('button', { name: 'Toggle Theme' }))
+    expect(isDark()).toBe(true)
+    expect(screen.getByRole('button')).toHaveTextContent('dark')
+  })
+
+  it('toggles and remembers the choice', async () => {
+    const user = setup()
+
+    await user.click(screen.getByRole('button'))
 
     expect(isDark()).toBe(true)
     expect(localStorage.getItem(THEME_STORAGE_KEY)).toBe('dark')
@@ -36,13 +65,13 @@ describe('theme provider', () => {
 
   it('restores a saved theme', () => {
     localStorage.setItem(THEME_STORAGE_KEY, 'dark')
-    renderToggle()
+    setup()
 
     expect(isDark()).toBe(true)
   })
 
   it('toggles with the d key, but not while typing or with a modifier', async () => {
-    const user = renderToggle()
+    const user = setup()
 
     await user.keyboard('d')
     expect(isDark()).toBe(true)
@@ -62,15 +91,15 @@ describe('theme provider', () => {
     vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
       throw new DOMException('Blocked', 'SecurityError')
     })
-    const user = renderToggle()
+    const user = setup()
 
-    await user.click(screen.getByRole('button', { name: 'Toggle Theme' }))
+    await user.click(screen.getByRole('button'))
 
     expect(isDark()).toBe(true)
   })
 
   it('follows a change made in another tab', () => {
-    renderToggle()
+    setup()
 
     act(() => {
       window.dispatchEvent(

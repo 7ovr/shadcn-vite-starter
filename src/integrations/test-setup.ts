@@ -1,14 +1,22 @@
 import '@testing-library/jest-dom/vitest'
-import { cleanup, configure } from '@testing-library/react'
-import { afterEach, vi } from 'vitest'
+import { cleanup } from '@testing-library/react'
+import { afterEach, beforeEach, vi } from 'vitest'
 
-// Tests call the real PokeAPI, so give network-backed queries time to settle.
-configure({ asyncUtilTimeout: 10_000 })
+import { installFakePokeApi } from '@/features/pokemon/api/fake-poke-api'
 
 function noop() {}
 
-// jsdom has neither scrollTo nor matchMedia, which the router and the theme provider use.
+// jsdom lacks these browser APIs, which the router, the theme and the command menu use.
 vi.stubGlobal('scrollTo', noop)
+Element.prototype.scrollIntoView = noop
+vi.stubGlobal(
+  'ResizeObserver',
+  class {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  },
+)
 vi.stubGlobal('matchMedia', (query: string) => ({
   matches: false,
   media: query,
@@ -19,6 +27,11 @@ vi.stubGlobal('matchMedia', (query: string) => ({
   removeListener: noop,
   dispatchEvent: () => false,
 }))
+
+// Every test gets the fake PokeAPI; a test that needs a failure overrides it with its own spy.
+beforeEach(() => {
+  installFakePokeApi()
+})
 
 afterEach(() => {
   cleanup()

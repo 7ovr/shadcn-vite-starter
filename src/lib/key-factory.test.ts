@@ -3,13 +3,13 @@ import { describe, expect, it } from 'vitest'
 import { createQueryKeys } from '@/lib/key-factory'
 
 describe('createQueryKeys', () => {
-  const keys = createQueryKeys('pokemon')
+  const keys = createQueryKeys('projects')
 
   it('scopes every key under the feature name', () => {
-    expect(keys.all).toEqual(['pokemon'])
-    expect(keys.lists()).toEqual(['pokemon', 'list'])
-    expect(keys.details()).toEqual(['pokemon', 'detail'])
-    expect(keys.detail('42')).toEqual(['pokemon', 'detail', '42'])
+    expect(keys.all).toEqual(['projects'])
+    expect(keys.lists()).toEqual(['projects', 'list'])
+    expect(keys.details()).toEqual(['projects', 'detail'])
+    expect(keys.detail('42')).toEqual(['projects', 'detail', '42'])
   })
 
   it('nests each key inside the broader one, so invalidating a parent covers its children', () => {

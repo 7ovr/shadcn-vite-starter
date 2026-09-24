@@ -65,6 +65,12 @@
       }
     },
     {
+      "files": ["src/components/icons.tsx"],
+      "rules": {
+        "shadcn/no-raw-colors": "off"
+      }
+    },
+    {
       "files": ["src/routes/**"],
       "rules": {
         "react/only-export-components": "off"
