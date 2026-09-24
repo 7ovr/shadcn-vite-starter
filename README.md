@@ -1,6 +1,6 @@
 # shadcn-vite-starter
 
-A React starter with the stack already wired: Vite, TypeScript, TanStack Router, Query, Form and Table, and shadcn/ui on Base UI. It ships a page built from six free [7Ovr](https://7ovr.com) blocks and a working example built on the free [PokéAPI](https://pokeapi.co), so you can start on the product instead of the setup.
+A React starter with the stack already wired: Vite, TypeScript, TanStack Router, Query, Form and Table, and shadcn/ui on Base UI. The app runs inside the free [7Ovr](https://7ovr.com) App Shell 1 block, a collapsible sidebar with search and a command menu, and its pages describe the starter itself: a home page with a paginated Pokémon table loaded from the free [PokéAPI](https://pokeapi.co), the setup steps, the tech stack and how coding agents work in the repo. Start on the product instead of the setup.
 
 ## Setup
 
@@ -36,10 +36,10 @@ Open http://localhost:5173. Installing also sets up the Git hooks that format an
 
 Copy `.env.example` to `.env` and fill in what you need. `.env` is ignored by Git.
 
-| Variable         | Required | Used for                                                                              |
-| ---------------- | -------- | ------------------------------------------------------------------------------------- |
-| `VITE_API_URL`   | No       | Where API requests go. Defaults to the PokéAPI. Set it to `/api` to use your backend. |
-| `REGISTRY_TOKEN` | No       | Installing 7Ovr Pro blocks. Read by the shadcn CLI, not by the app.                   |
+| Variable         | Required | Used for                                                                     |
+| ---------------- | -------- | ---------------------------------------------------------------------------- |
+| `VITE_API_URL`   | No       | Where API requests go. Defaults to the PokéAPI; set `/api` for your backend. |
+| `REGISTRY_TOKEN` | No       | Installing 7Ovr Pro blocks. Read by the shadcn CLI, not by the app.          |
 
 Only variables starting with `VITE_` reach the app, as `import.meta.env.VITE_*`. They end up in the browser, so never put secrets in them.
 
@@ -47,41 +47,45 @@ With `VITE_API_URL=/api`, the dev server forwards every `/api` request to `http:
 
 ## Scripts
 
-| Command             | What it does                                                  |
-| ------------------- | ------------------------------------------------------------- |
-| `pnpm dev`          | Start the dev server, with the TanStack devtools              |
-| `pnpm build`        | Typecheck, then build the site to `dist/`                     |
-| `pnpm preview`      | Serve the production build locally                            |
-| `pnpm test`         | Run the tests once (they need network access for the PokéAPI) |
-| `pnpm test:watch`   | Run the tests and rerun them on every change                  |
-| `pnpm lint`         | Lint the code                                                 |
-| `pnpm lint:fix`     | Lint and fix what can be fixed automatically                  |
-| `pnpm typecheck`    | Check the types                                               |
-| `pnpm format`       | Format every file                                             |
-| `pnpm format:check` | Check the formatting without changing files                   |
+| Command             | What it does                                     |
+| ------------------- | ------------------------------------------------ |
+| `pnpm dev`          | Start the dev server, with the TanStack devtools |
+| `pnpm build`        | Typecheck, then build the site to `dist/`        |
+| `pnpm preview`      | Serve the production build locally               |
+| `pnpm test`         | Run the tests once                               |
+| `pnpm test:watch`   | Run the tests and rerun them on every change     |
+| `pnpm lint`         | Lint the code                                    |
+| `pnpm lint:fix`     | Lint and fix what can be fixed automatically     |
+| `pnpm typecheck`    | Check the types                                  |
+| `pnpm format`       | Format every file                                |
+| `pnpm format:check` | Check the formatting without changing files      |
 
 ## Project layout
 
 ```
 src/
 ├── routes/                     One file per page
-│   ├── __root.tsx              Header, not found page and error page
-│   ├── (marketing)/            Full-width pages, like the block-built home page
-│   └── (app)/                  Pages in the app layout, like the Pokémon example
+│   ├── __root.tsx              The app shell, not found page and error page
+│   ├── index.tsx               Home, with the Pokémon table
+│   ├── get-started.tsx         Get Started
+│   ├── tech-stack.tsx          Tech Stack
+│   └── agentic-coding.tsx      Agentic Coding
 ├── components/
-│   ├── blocks/                 Installed 7Ovr blocks, yours to edit
+│   ├── app-shell-1.tsx         The app shell, from the 7Ovr App Shell 1 block
+│   ├── icons.tsx               Brand marks: 7Ovr, GitHub and the tech stack logos
+│   ├── command-menu.tsx        The Ctrl+K command menu, loaded on first use
 │   └── ui/                     shadcn/ui components and their variants
-├── features/pokemon/           The example feature
-│   ├── api/                    API calls and queries
-│   ├── components/             Search form, table and detail view
-│   └── lib/                    Types, validation and formatting
+├── features/                   One folder per feature
+│   ├── pokemon/                The Home table: API calls, queries, the fake PokéAPI for tests
+│   ├── tech-stack/             The filterable Tech Stack table
+│   └── issue-form/             The Report An Issue dialog and form
 ├── integrations/               Axios, Query client, router, test setup
-├── hooks/                      Shared React hooks, like useTheme
-├── lib/                        Shared helpers, config, the query key factory and the theme
+├── hooks/                      Shared React hooks: useTheme and useIsMobile
+├── lib/                        Shared helpers, config, navigation, the tech stack list and the theme
 ├── types/                      Type declarations for environment variables
 ├── route-tree.gen.ts           Generated from src/routes, do not edit
 ├── index.tsx                   Starts the app
-└── index.css                   Tailwind and the theme tokens
+└── index.css                   Tailwind and the 7Ovr theme tokens
 ```
 
 ## Architecture
@@ -90,14 +94,17 @@ The app is a single-page application: the server sends one HTML file and the bro
 
 **Start-up.** `src/index.tsx` renders the app with the shared Query client and router from `src/integrations/`.
 
-**Pages.** The router builds its pages from the files in `src/routes/`. Folders in parentheses group pages that share a layout without changing their URL: `(marketing)` pages run full width, `(app)` pages sit in a centred container. Each page is its own bundle, loaded when you first visit or hover a link to it.
+**Layout.** Every page renders inside the app shell in `src/components/app-shell-1.tsx`: the sidebar with search, the pages and external resources, and the command menu on Ctrl+K. The sidebar footer and the command menu also open **Report An Issue**, a dialog that prefills a GitHub issue; nothing is sent from the app. Page content sits in one centred column. The sidebar and the command menu both read their entries from `src/lib/navigation.ts`.
 
-**Data.** Every request goes through one Axios client. A page's loader starts its requests before the page renders, in one of two ways:
+**Pages.** The router builds its pages from the files in `src/routes/`. Each page is its own bundle, loaded when you first visit or hover a link to it. To add a page, create a file in `src/routes/` and add it to `NAV_ITEMS` in `src/lib/navigation.ts` with a label and an icon. External links go in `RESOURCES` in the same file. Get Started demonstrates the status colour tokens, from `src/components/status-tokens.tsx`.
 
-- **Most pages don't wait.** `/pokemon` starts loading the list and renders at once. Only the table shows a loading state, and if the request fails only the table shows an error with a retry button.
-- **Some pages must wait.** `/pokemon/$name` waits for its Pokémon, because an unknown name has to show a proper "not found" page instead of an empty one.
+**Data.** Requests go through one Axios client and are cached by TanStack Query. A page's loader can start its requests before the page renders, so navigation stays instant.
 
-**Features.** Each feature keeps its API calls, queries, components and types together in `src/features/<name>/`. To remove the example, delete `src/features/pokemon/` and `src/routes/(app)/_app/pokemon/`, and take its link out of `src/components/site-header.tsx`.
+**Example data.** The Home route's loader starts fetching a page of Pokémon before the page renders, and TanStack Query caches every page. The page and page size live in the URL, so a shared link opens the same view. Tests run against a fake PokéAPI (`src/features/pokemon/api/fake-poke-api.ts`) and never touch the network.
+
+To remove the example, delete `src/features/pokemon/`, the Pokémon section and its imports in `src/routes/index.tsx`, the `installFakePokeApi` import and `beforeEach` in `src/integrations/test-setup.ts`, and the Pokémon heading check in `src/integrations/router.test.tsx`. Then set `VITE_API_URL` or change the default in `src/lib/config.ts`.
+
+**Features.** Keep each feature's API calls, queries, components and types together in `src/features/<name>/`.
 
 ## Add blocks from 7Ovr
 
@@ -131,7 +138,7 @@ pnpm dlx shadcn@latest add @7ovr-pro/<name>
 
 ## Theme
 
-Colours come from CSS variables in `src/index.css`, with a light and a dark set. Change them there and every component and block follows. Press `d` to switch between light and dark, or use the button in the header.
+Colours and fonts follow the 7Ovr theme: CSS variables in `src/index.css`, with a light and a dark set, Oxanium for all text (13px body size) and Syne for the 7Ovr wordmark. Change them there and every component and block follows. Press `d` to switch between light and dark, or use the button at the bottom of the sidebar.
 
 ## License
 
