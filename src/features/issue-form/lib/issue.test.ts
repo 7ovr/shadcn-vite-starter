@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs'
+
 import { describe, expect, it } from 'vitest'
 
 import { ISSUE_TYPES, isIssueType, issueSchema, issueUrl } from '@/features/issue-form/lib/issue'
@@ -42,11 +44,20 @@ describe('issueSchema', () => {
 })
 
 describe('issueUrl', () => {
-  it('builds a prefilled GitHub issue link', () => {
+  it('opens the matching GitHub issue form, prefilled', () => {
     const url = new URL(issueUrl(valid))
 
     expect(url.origin + url.pathname).toBe('https://github.com/7ovr/shadcn-vite-starter/issues/new')
+    expect(url.searchParams.get('template')).toBe('bug-report.yml')
     expect(url.searchParams.get('title')).toBe('[Bug Report] Sidebar tooltip overlaps the page')
-    expect(url.searchParams.get('body')).toBe(valid.details)
+    expect(url.searchParams.get('details')).toBe(valid.details)
+  })
+
+  it.each(ISSUE_TYPES)('has an issue form for $label with the same title prefix', (type) => {
+    const form = readFileSync(`.github/ISSUE_TEMPLATE/${type.template}`, 'utf8')
+
+    expect(form).toContain(`name: ${type.label}`)
+    expect(form).toContain(`title: '[${type.label}] '`)
+    expect(form).toMatch(/^\s+id: details$/m)
   })
 })

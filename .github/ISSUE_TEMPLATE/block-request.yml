@@ -1,0 +1,22 @@
+name: Block Request
+description: A 7Ovr block or template you would like to see built with this stack.
+title: '[Block Request] '
+labels: [block request]
+body:
+  - type: markdown
+    attributes:
+      value: Browse the existing blocks at [7ovr.com/blocks](https://7ovr.com/blocks) first, in case it already exists.
+  - type: textarea
+    id: details
+    attributes:
+      label: The Block
+      description: What the block shows and where you would use it.
+      placeholder: A pricing page with a monthly and yearly toggle and three plans.
+    validations:
+      required: true
+  - type: input
+    id: reference
+    attributes:
+      label: Reference
+      description: A link to a similar design or product, if you have one.
+      placeholder: https://

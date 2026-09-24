@@ -126,7 +126,7 @@ The app is a single-page application: the server sends one HTML file and the bro
 
 **Start-up.** `src/index.tsx` renders the app with the shared Query client and router from `src/integrations/`.
 
-**Layout.** Every page renders inside the app shell in `src/components/app-shell-1.tsx`: the sidebar with search, the pages and external resources, and the command menu on Ctrl+K. The sidebar footer and the command menu also open **Report An Issue**, a dialog that prefills a GitHub issue; nothing is sent from the app. Page content sits in one centred column. The sidebar and the command menu both read their entries from `src/lib/navigation.ts`.
+**Layout.** Every page renders inside the app shell in `src/components/app-shell-1.tsx`: the sidebar with search, the pages and external resources, and the command menu on Ctrl+K. The sidebar footer and the command menu also open **Report An Issue**, a dialog that opens the matching GitHub issue form, prefilled; nothing is sent from the app. Each issue type in `src/features/issue-form/lib/issue.ts` has its form in `.github/ISSUE_TEMPLATE/`, and a test keeps the two in step. Page content sits in one centred column. The sidebar and the command menu both read their entries from `src/lib/navigation.ts`.
 
 **Pages.** The router builds its pages from the files in `src/routes/`. Each page is its own bundle, loaded when you first visit or hover a link to it. To add a page, create a file in `src/routes/` and add it to `NAV_ITEMS` in `src/lib/navigation.ts` with a label and an icon. External links go in `RESOURCES` in the same file. Get Started demonstrates the status colour tokens, from `src/components/status-tokens.tsx`.
 

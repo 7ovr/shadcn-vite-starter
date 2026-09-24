@@ -1,0 +1,21 @@
+name: Feature Request
+description: An idea that would make the starter more useful.
+title: '[Feature Request] '
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for the idea. Please search the existing issues first, in case someone has already asked for it.
+  - type: textarea
+    id: details
+    attributes:
+      label: The Idea
+      description: What should the starter do, and what problem does it solve for you?
+      placeholder: A settings page that shows how to build a form with several sections.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives
+      description: Anything you tried or considered instead.
