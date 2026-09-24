@@ -199,6 +199,10 @@ Colours and fonts follow the 7Ovr theme: CSS variables in `src/index.css`, with 
 - **Netlify**: add a `public/_redirects` file containing `/* /index.html 200`.
 - **Anything else**: set up a fallback to `index.html`.
 
+## Contributing
+
+Issues and pull requests are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) for the setup, the conventions and the checks to run, and report security problems privately as described in [SECURITY.md](SECURITY.md).
+
 ## License
 
 [MIT](LICENSE). Built by [7Ovr](https://7ovr.com), where you can find more blocks and templates for this stack.
