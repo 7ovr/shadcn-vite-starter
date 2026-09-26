@@ -22,6 +22,11 @@
       "description": "Keep the Node types on the Node major the project targets",
       "matchPackageNames": ["@types/node"],
       "allowedVersions": "<25"
+    },
+    {
+      "description": "Keep the Node and pnpm floor in engines and CI, raised by hand",
+      "matchDepNames": ["node", "pnpm"],
+      "enabled": false
     }
   ]
 }
