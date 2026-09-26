@@ -23,8 +23,8 @@ TanStack Router, Query, Form and Table, shadcn/ui on Base UI, strict TypeScript 
 <p>
   <a href="#quick-start"><strong>Quick Start</strong></a> ·
   <a href="#whats-inside"><strong>What's Inside</strong></a> ·
-  <a href="#add-blocks-from-7ovr"><strong>Add Blocks</strong></a> ·
-  <a href="https://7ovr.com/blocks"><strong>Browse 7Ovr Blocks</strong></a>
+  <a href="#working-with-coding-agents"><strong>Coding Agents</strong></a> ·
+  <a href="#add-blocks-from-7ovr"><strong>Add Blocks</strong></a>
 </p>
 
 </div>
@@ -117,7 +117,7 @@ src/
 ├── types/                      Type declarations for environment variables
 ├── route-tree.gen.ts           Generated from src/routes, do not edit
 ├── index.tsx                   Starts the app
-└── index.css                   Tailwind and the 7Ovr theme tokens
+└── index.css                   Tailwind and the theme tokens
 ```
 
 ## Architecture
@@ -189,7 +189,7 @@ With `VITE_API_URL=/api`, the dev server forwards every `/api` request to `http:
 
 ## Theme
 
-Colours and fonts follow the 7Ovr theme: CSS variables in `src/index.css`, with a light and a dark set, Oxanium for all text (13px body size) and Syne for the 7Ovr wordmark. Status colours `success`, `warning`, `info` and `destructive` each come with a `-foreground` pair. Change them there and every component and block follows. Press `d` to switch between light and dark, or use the button at the bottom of the sidebar.
+Colours and fonts are CSS variables in `src/index.css`, with a light and a dark set, Oxanium for all text (13px body size) and Syne for the wordmark. Status colours `success`, `warning`, `info` and `destructive` each come with a `-foreground` pair. Change them there and every component and block follows. Press `d` to switch between light and dark, or use the button at the bottom of the sidebar.
 
 ## Deploy
 
@@ -205,4 +205,4 @@ Issues and pull requests are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) fo
 
 ## License
 
-[MIT](LICENSE). Built by [7Ovr](https://7ovr.com), where you can find more blocks and templates for this stack.
+[MIT](LICENSE). Made by [7Ovr](https://7ovr.com).
