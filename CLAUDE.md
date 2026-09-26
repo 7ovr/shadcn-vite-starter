@@ -9,6 +9,7 @@ How to write code in this repository: conventions, patterns and constraints. Set
 - **Oxlint and oxfmt.** Lint with Oxlint and [`@shadcn/lint`](https://github.com/shadcn-ui/lint), format with oxfmt. Do not add ESLint, Prettier or typescript-eslint.
 - **Client-rendered SPA.** Vite 8 with TanStack Router. There is no server rendering.
 - **Fresh releases wait a day.** pnpm refuses versions published in the last 24 hours. Pick an older version or wait. Never add `minimumReleaseAgeExclude`.
+- **Renovate keeps dependencies current** (`renovate.json`). Stable minor and patch updates arrive in one weekly PR that merges itself once CI passes; majors and 0.x packages get their own PRs to review. `@types/node` is capped at the Node major; raise the cap with `engines.node`.
 - **Stop the dev server before creating route files in bulk.** Its route generator fills any empty file in `src/routes/` with a placeholder, and a file that is being written counts as empty for a moment.
 
 ## Code conventions
