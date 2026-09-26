@@ -24,7 +24,7 @@ TanStack Router, Query, Form and Table, shadcn/ui on Base UI, strict TypeScript 
   <a href="#quick-start"><strong>Quick Start</strong></a> ·
   <a href="#whats-inside"><strong>What's Inside</strong></a> ·
   <a href="#working-with-coding-agents"><strong>Coding Agents</strong></a> ·
-  <a href="#add-components-and-blocks"><strong>Add Components</strong></a>
+  <a href="#add-blocks-from-7ovr"><strong>Add Blocks</strong></a>
 </p>
 
 </div>
@@ -146,21 +146,27 @@ To remove the example:
 4. Remove the Pokémon heading check from `src/integrations/router.test.tsx`.
 5. Set `VITE_API_URL`, or change the default in `src/lib/config.ts`.
 
-## Add components and blocks
+## Add blocks from 7Ovr
 
-The shadcn CLI works as usual:
-
-```bash
-pnpm dlx shadcn@latest add dialog
-```
-
-Registry blocks install the same way, and `components.json` already lists the 7Ovr registry:
+The 7Ovr registry is already set up in `components.json`. Install any free block by name:
 
 ```bash
 pnpm dlx shadcn@latest add @7ovr/hero-2
 ```
 
-Blocks land in `src/components/blocks/`. If the CLI asks to overwrite a file in `src/components/ui/`, answer no: this starter's copies carry their own variants. Run `pnpm format` afterwards.
+The source lands in `src/components/blocks/`. If the CLI asks to overwrite a file in `src/components/ui/`, answer no: this starter's copies carry their own variants. Then run `pnpm format` and import the block into a page:
+
+```tsx
+import HeroBlock from '@/components/blocks/hero-2'
+```
+
+Browse every block at [7ovr.com/blocks](https://7ovr.com/blocks).
+
+For Pro blocks, set `REGISTRY_TOKEN` in `.env` to the token from your 7Ovr account, then install from the Pro registry:
+
+```bash
+pnpm dlx shadcn@latest add @7ovr-pro/<name>
+```
 
 ## Working with coding agents
 
@@ -172,9 +178,10 @@ Four skills are vendored into `.claude/skills/` for Claude Code and `.agents/ski
 
 Copy `.env.example` to `.env` and fill in what you need. `.env` is ignored by Git.
 
-| Variable       | Required | Used for                                                                     |
-| -------------- | -------- | ---------------------------------------------------------------------------- |
-| `VITE_API_URL` | No       | Where API requests go. Defaults to the PokéAPI; set `/api` for your backend. |
+| Variable         | Required | Used for                                                                     |
+| ---------------- | -------- | ---------------------------------------------------------------------------- |
+| `VITE_API_URL`   | No       | Where API requests go. Defaults to the PokéAPI; set `/api` for your backend. |
+| `REGISTRY_TOKEN` | No       | Installing 7Ovr Pro blocks. Read by the shadcn CLI, not by the app.          |
 
 Only variables starting with `VITE_` reach the app, as `import.meta.env.VITE_*`. They end up in the browser, so never put secrets in them.
 
