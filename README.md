@@ -8,7 +8,7 @@
 <h1>7Ovr Starter</h1>
 
 <p><strong>A Vite and React starter with the whole stack already wired.</strong><br />
-TanStack Router, Query, Form and Table, shadcn/ui on Base UI, strict TypeScript 7 and a test suite, inside the free 7Ovr App Shell.</p>
+TanStack Router, Query, Form and Table, shadcn/ui on Base UI, strict TypeScript 7 and a test suite, optimized for coding agents.</p>
 
 <p>
   <a href="https://github.com/7ovr/shadcn-vite-starter/actions/workflows/ci.yml"><img src="https://github.com/7ovr/shadcn-vite-starter/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
@@ -37,13 +37,13 @@ TanStack Router, Query, Form and Table, shadcn/ui on Base UI, strict TypeScript 
 
 Most starters stop at a blank page. This one ships a working app that describes itself, so every pattern you need has a live example to copy.
 
-- **An app shell, not a blank page.** The free [7Ovr](https://7ovr.com) App Shell 1 block: a collapsible sidebar with search, a Ctrl+K command menu, light and dark themes, and a sheet on phones.
+- **Optimized for coding agents.** `CLAUDE.md` holds every convention, `AGENTS.md` points to it, and four vendored skills keep Claude Code, Codex and Cursor on pattern.
+- **An app shell, not a blank page.** A collapsible sidebar with search, a Ctrl+K command menu, light and dark themes, and a sheet on phones.
 - **Data fetching done right.** Route loaders prefetch with TanStack Query, the page and page size live in the URL, and each record is cached on its own. The Home table loads from the free [PokéAPI](https://pokeapi.co).
 - **Forms with real validation.** Report An Issue is a TanStack Form with a Zod schema. Errors appear after the first submit, focus moves to the first field to fix, and the issue opens prefilled on GitHub.
 - **Tables that stay still.** TanStack Table with sorting, filtering and pagination. Columns keep a fixed width and drop cleanly on phones.
 - **A design system that enforces itself.** [`@shadcn/lint`](https://github.com/shadcn-ui/lint) fails the build on raw colours, arbitrary values and restyled components.
 - **Checked on every commit.** Oxlint, oxfmt, TypeScript 7, Vitest and a production build run in CI; Lefthook formats and lints staged files locally. Tests never touch the network.
-- **Ready for coding agents.** `CLAUDE.md` holds every convention, `AGENTS.md` points to it, and four vendored skills keep Claude Code, Codex and Cursor on pattern.
 
 ## Quick start
 
@@ -103,7 +103,7 @@ src/
 │   ├── tech-stack.tsx          Tech Stack
 │   └── agentic-coding.tsx      Agentic Coding
 ├── components/
-│   ├── app-shell-1.tsx         The app shell, from the 7Ovr App Shell 1 block
+│   ├── app-shell-1.tsx         The app shell: sidebar, search and navigation
 │   ├── icons.tsx               Brand marks: 7Ovr, GitHub and the tech stack logos
 │   ├── command-menu.tsx        The Ctrl+K command menu, loaded on first use
 │   └── ui/                     shadcn/ui components and their variants
