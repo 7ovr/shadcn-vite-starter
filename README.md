@@ -96,11 +96,14 @@ CI runs `lint`, `format:check`, `typecheck`, `test` and `build` on every push an
 
 Renovate can open updates every morning before 06:00 UTC, whenever the hosted service runs in that window. Stable minor and patch updates share one PR and merge once the required CI check passes. Major updates and 0.x packages need review. Releases must be at least 24 hours old, and Node and pnpm upgrades stay manual.
 
+The shadcn CLI is temporarily held at **4.21.3**, with its Renovate updates disabled. Its transitive `braces` dependency has an [unpatched security advisory](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm). This hold retains the CLI and its stylesheet; it does not remove that vulnerability. Use `pnpm exec shadcn` to run the installed version rather than fetching `shadcn@latest`. Before lifting the hold, verify an upstream fix with `pnpm audit`, then update the exact pin and remove the corresponding Renovate rule.
+
 To update without waiting for Renovate, run:
 
 ```bash
 pnpm update
 pnpm outdated
+pnpm audit
 pnpm lint
 pnpm format:check
 pnpm typecheck
@@ -169,7 +172,7 @@ To remove the example:
 The 7Ovr registry is already set up in `components.json`. Install any free block by name:
 
 ```bash
-pnpm dlx shadcn@latest add @7ovr/hero-2
+pnpm exec shadcn add @7ovr/hero-2
 ```
 
 The source lands in `src/components/blocks/`. If the CLI asks to overwrite a file in `src/components/ui/`, answer no: this starter's copies carry their own variants. Then run `pnpm format` and import the block into a page:
@@ -183,7 +186,7 @@ Browse every block at [7ovr.com/blocks](https://7ovr.com/blocks).
 For Pro blocks, set `REGISTRY_TOKEN` in `.env` to the token from your 7Ovr account, then install from the Pro registry:
 
 ```bash
-pnpm dlx shadcn@latest add @7ovr-pro/<name>
+pnpm exec shadcn add @7ovr-pro/<name>
 ```
 
 ## Working with coding agents

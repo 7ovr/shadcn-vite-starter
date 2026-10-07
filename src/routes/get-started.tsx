@@ -56,7 +56,7 @@ const STEPS: {
         Blocks & Templates
       </span>
     ),
-    code: 'pnpm dlx shadcn@latest add @7ovr/hero-1',
+    code: 'pnpm exec shadcn add @7ovr/hero-1',
     copy: true,
   },
 ]
