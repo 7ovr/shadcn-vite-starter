@@ -1,5 +1,8 @@
 packages: []
 
+overrides:
+  'seroval@<1.6.2': ^1.6.8
+
 allowBuilds:
   # Hooks install through the prepare script instead.
   lefthook: false
