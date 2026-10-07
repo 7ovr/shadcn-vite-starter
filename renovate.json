@@ -5,13 +5,13 @@
     ":semanticCommitTypeAll(chore)",
     ":semanticCommitScopeDisabled"
   ],
-  "schedule": ["before 6am on monday"],
+  "schedule": ["before 6am"],
   "minimumReleaseAge": "1 day",
   "rangeStrategy": "bump",
   "automergeStrategy": "squash",
   "packageRules": [
     {
-      "description": "Group stable minor and patch updates into one weekly PR that merges once CI passes",
+      "description": "Group stable minor and patch updates into one PR that merges once CI passes",
       "matchUpdateTypes": ["minor", "patch"],
       "matchCurrentVersion": "!/^0/",
       "groupName": "non-major dependencies",
