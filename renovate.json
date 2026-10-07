@@ -24,6 +24,11 @@
       "allowedVersions": "<25"
     },
     {
+      "description": "Hold the shadcn CLI until its transitive braces vulnerability has an upstream fix",
+      "matchPackageNames": ["shadcn"],
+      "enabled": false
+    },
+    {
       "description": "Keep the Node and pnpm floor in engines and CI, raised by hand",
       "matchDepNames": ["node", "pnpm"],
       "enabled": false

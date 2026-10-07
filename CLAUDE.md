@@ -9,6 +9,7 @@ How to write code in this repository: conventions, patterns and constraints. Set
 - **Oxlint and oxfmt.** Lint with Oxlint and [`@shadcn/lint`](https://github.com/shadcn-ui/lint), format with oxfmt. Do not add ESLint, Prettier or typescript-eslint.
 - **Client-rendered SPA.** Vite 8 with TanStack Router. There is no server rendering.
 - **Fresh releases wait a day.** pnpm refuses versions published in the last 24 hours. Pick an older version or wait. Never add `minimumReleaseAgeExclude`.
+- **Check dependency security before upgrading.** Audit direct and transitive dependencies, including development tooling, with `pnpm audit`. Do not accept an upgrade with known vulnerabilities or suppress advisories to pass the check. The maintainer has chosen to retain the shadcn CLI at exactly 4.21.3 despite its existing unpatched `braces` advisory; Renovate updates for it are disabled. Keep that hold until an upstream fix is available and verified. Use `pnpm exec shadcn` so commands respect the installed pin.
 - **Renovate keeps dependencies current** (`renovate.json`). Updates are eligible every morning before 06:00 UTC. Stable minor and patch updates arrive in one grouped PR that merges itself once CI passes; majors and 0.x packages get their own PRs to review. It leaves the Node and pnpm floor in `engines` and CI alone, and caps `@types/node` at the Node major; raise both by hand.
 - **Stop the dev server before creating route files in bulk.** Its route generator fills any empty file in `src/routes/` with a placeholder, and a file that is being written counts as empty for a moment.
 
@@ -104,11 +105,11 @@ Also:
 - Icon-only buttons need an `aria-label`. Sortable table headers set `aria-sort`.
 - Render the TanStack devtools without an environment check: both render nothing outside development. The root route hides them on phones through `useIsMobile`, because their buttons would cover the page.
 - Keep the first download small. Anything heavy that is not needed on every page loads on first use with `React.lazy`, as `CommandMenu` (cmdk) and `IssueDialog` (the form and full Zod) do in `app-shell-1.tsx`. Pair `useLazyDialog` with `LazyMount`: the dialog stays mounted after first use so closing can animate, and a chunk that fails to load drops the dialog instead of the whole shell. Schemas in route config, such as `validateSearch`, use `zod/mini`, because route config ships with every page.
-- Add shadcn components with `pnpm dlx shadcn@latest add <name>`.
+- Add shadcn components with `pnpm exec shadcn add <name>`.
 
 ### 7Ovr blocks
 
-Install with `pnpm dlx shadcn@latest add @7ovr/<name>`; they land in `src/components/blocks/`. Once a block is adapted into the app, move it up into `src/components/` (as `app-shell-1.tsx` was) so the full design-system lint applies.
+Install with `pnpm exec shadcn add @7ovr/<name>`; they land in `src/components/blocks/`. Once a block is adapted into the app, move it up into `src/components/` (as `app-shell-1.tsx` was) so the full design-system lint applies.
 
 - **Never let an install overwrite `src/components/ui/`.** Blocks list `button`, `badge` and similar as dependencies, so the CLI asks to overwrite them. Answer no, and never pass `--overwrite`: our copies carry variants such as `Badge` `subtle`, and overwriting drops them.
 - Run `pnpm format` after adding a block. The registry ships double quotes; the pre-commit hook fixes that too, but CI checks formatting.
