@@ -92,6 +92,24 @@ Open http://localhost:5173. Installing also sets up the Git hooks that format an
 
 CI runs `lint`, `format:check`, `typecheck`, `test` and `build` on every push and pull request.
 
+## Updating dependencies
+
+Renovate can open updates every morning before 06:00 UTC, whenever the hosted service runs in that window. Stable minor and patch updates share one PR and merge once the required CI check passes. Major updates and 0.x packages need review. Releases must be at least 24 hours old, and Node and pnpm upgrades stay manual.
+
+To update without waiting for Renovate, run:
+
+```bash
+pnpm update
+pnpm outdated
+pnpm lint
+pnpm format:check
+pnpm typecheck
+pnpm test
+pnpm build
+```
+
+`pnpm update` stays within the ranges in `package.json`. Review any remaining outdated packages separately, especially major versions and 0.x minor releases. Commit `package.json` and `pnpm-lock.yaml` together when both change; `pnpm update` may only change the lockfile. CI verifies the frozen lockfile on every PR.
+
 ## Project layout
 
 ```
