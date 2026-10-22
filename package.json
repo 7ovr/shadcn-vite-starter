@@ -35,7 +35,7 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@shadcn/lint": "^0.2.1",
+    "@shadcn/lint": "^0.2.3",
     "@tailwindcss/vite": "^4.3.3",
     "@tanstack/react-query-devtools": "^5.104.2",
     "@tanstack/react-router-devtools": "^1.167.2",
