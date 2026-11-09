@@ -96,7 +96,7 @@ CI runs `lint`, `format:check`, `typecheck`, `test` and `build` on every push an
 
 Renovate can open updates every morning before 06:00 UTC, whenever the hosted service runs in that window. Stable minor and patch updates share one PR and merge once the required CI check passes. Major updates and 0.x packages need review. Releases must be at least 24 hours old, and Node and pnpm upgrades stay manual.
 
-The shadcn CLI is temporarily held at **4.21.3**, with its Renovate updates disabled. Its transitive `braces` dependency has an [unpatched security advisory](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm). This hold retains the CLI and its stylesheet; it does not remove that vulnerability. Use `pnpm exec shadcn` to run the installed version rather than fetching `shadcn@latest`. Before lifting the hold, verify an upstream fix with `pnpm audit`, then update the exact pin and remove the corresponding Renovate rule.
+The shadcn CLI is pinned to an exact version, and Renovate raises the pin like any other update. Use `pnpm exec shadcn` to run the installed version rather than fetching `shadcn@latest`.
 
 To update without waiting for Renovate, run:
 
