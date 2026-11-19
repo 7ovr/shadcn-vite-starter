@@ -8,4 +8,4 @@ allowBuilds:
 
 overrides:
   # The shadcn CLI still uses ts-morph's older minimatch range.
-  '@ts-morph/common@0.27.0>minimatch': 11.0.5
+  '@ts-morph/common@0.27.0>minimatch': 11.0.9
